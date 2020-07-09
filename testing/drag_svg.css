@@ -1,0 +1,18 @@
+#node_id {
+  overflow: hidden;
+  position: fixed;
+  /* position: relative; */
+}
+#node_resizer_id
+{
+    overflow: hidden;
+    position: fixed;
+    /* position: relative; */
+}
+
+a {
+  font-size: 40px;
+}
+a:hover {
+  cursor: node_id;
+}

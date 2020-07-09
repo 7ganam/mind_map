@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="drag_svg.css">
+</head>
+<!-- # TODO: get rid of the need to make margin =0 -->
+<body id="body" style="margin: 0;">
+
+    <div>
+        <!-- <svg id="node_id" height="85" width="85" style="border:1px solid black">
+                <rect id="node_content_id" x="3" y="3" rx="20" ry="20" width="80" height="80"
+                style="fill:red;stroke:black;stroke-width:5;opacity:0.5" />
+        </svg>
+        <svg id="node_resizer_id" height="10" width="10" >
+            <circle cx="5" cy="5" r="4" stroke="green" stroke-width="2" fill="red" />
+        </svg> -->
+    </div>
+
+ 
+    
+    <script>
+
+
+        var create_svg_node=function(h,w,node_id,x,y)
+        {
+            var NS="http://www.w3.org/2000/svg";
+            var svg=document.createElementNS(NS,"svg");
+            //set svg style
+                svg.style.border= "1px solid black";
+                svg.style.position= "fixed";
+                svg.style.top= x + "px";  //position relative to the window
+                svg.style.left= y + "px";
+
+            //set svg attributes
+                svg.setAttribute("height", h);
+                svg.setAttribute("width", w);
+                svg.setAttribute("id", node_id);
+            return svg;
+            return svg;
+        }
+        var creat_rect=function(h,w,fill,resizer_id,x,y){
+            var NS="http://www.w3.org/2000/svg";
+            var SVGObj= document.createElementNS(NS,"rect");
+            SVGObj.width.baseVal.value=w;
+            SVGObj.height.baseVal.value=h;
+            SVGObj.setAttribute("height",h);
+            SVGObj.setAttribute("id", resizer_id);
+            SVGObj.setAttribute("x", x);
+            SVGObj.setAttribute("y", y);
+            SVGObj.setAttribute("rx", 20);
+            SVGObj.setAttribute("ry", 20);
+            SVGObj.style="fill:red;stroke:black;stroke-width:5;opacity:0.5"
+            return SVGObj;
+        }
+        var node_svg1=create_svg_node(85,85,"node_content_box_1",200,100);
+        document.body.appendChild(node_svg1);
+        var r= creat_rect(80,80,"blue","rect_1",3,3);
+        node_svg1.appendChild(r);
+
+        var resizer_svg1=create_svg_node(10,10,"resiezer_1",200+85,100+85);
+        document.body.appendChild(resizer_svg1);
+        var r2= creat_rect(10,10,"red","r1",0,0);
+        resizer_svg1.appendChild(r2);
+
+    </script>
+    
+    <script src="darg_handling.js"> </script>
+    <script src="resize_handling.js"> </script>
+
+</body>
+</html>
