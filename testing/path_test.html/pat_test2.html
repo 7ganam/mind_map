@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>path_test</title>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+<body>
+
+
+
+    <script>
+        var draw_dot= function(point_object,r,svg_container)
+        {
+            var svgns = "http://www.w3.org/2000/svg";
+            container = svg_container;
+            var circle = document.createElementNS(svgns, 'circle');
+            circle.setAttributeNS(null, 'cx', point_object.x);
+            circle.setAttributeNS(null, 'cy', point_object.y);
+            circle.setAttributeNS(null, 'r', r);
+            container.appendChild(circle);
+        }
+
+
+
+        var create_svg=function(x,y,w,h)
+        {
+            var NS="http://www.w3.org/2000/svg";
+            var svg=document.createElementNS(NS,"svg");
+            //set svg style
+                svg.style.border= "1px solid black";
+                svg.style.position= "fixed";
+                svg.style.top= y + "px";  //position relative to the window
+                svg.style.left= x + "px";
+            //set svg attributes
+                svg.setAttribute("height", h);
+                svg.setAttribute("width", w);
+
+            return svg;
+        }
+
+        var create_path =function(points_array)
+        {
+                //create path string
+                var d_string ="";
+                d_string = "M " + points_array[0].x+"," + points_array[0].y + " ";
+                for(let i = 1;    i < (points_array.length-1)   ; i++)
+                { 
+                    // console.log(points_array[i]);
+                    d_string =d_string+ "L " + points_array[i].x+"," + points_array[i].y + " ";
+                }
+                d_string =d_string+ "L " + points_array[points_array.length-1].x+"," + points_array[points_array.length-1].y + " ";
+
+                var NS="http://www.w3.org/2000/svg";
+                var SVGObj= document.createElementNS('http://www.w3.org/2000/svg',"path");  
+                SVGObj.setAttributeNS(null, "d", d_string);
+           // SVGObj.setAttributeNS(null, "d", "M 100,300 C 175,300 250,300 250,200 S 325,100 400,100");
+                SVGObj.setAttribute("stroke", "green");
+                SVGObj.setAttribute("stroke-width", 3);
+                SVGObj.setAttribute("fill", "none");
+            return SVGObj;
+
+        }
+
+        var creat_right_path = function(start_point, end_point ,base_svg)
+        {
+
+            let middle_x = Math.min(start_point.x, end_point.x) + Math.abs(start_point.x-end_point.x)/2;
+            console.log(middle_x)
+
+            this.middle_start_point= {x:"0"   , y:"0"   };
+            this.middle_end_point=   {x:"0"   , y:"0"   };
+
+            this.end_point=end_point;
+            this.start_point=start_point;
+
+            this.middle_start_point.y=this.start_point.y;
+            this.middle_start_point.x=middle_x;
+
+            this.middle_end_point.y=this.end_point.y;
+            this.middle_end_point.x=middle_x;
+
+
+            this.points_array = [this.start_point ,  this.middle_start_point  ,  this.middle_end_point , this.end_point ];
+            //create svg for the path
+                this.content_box_svg=base_svg;
+            //add the svg box to the dom
+                document.body.appendChild(this.content_box_svg);
+            //create path 
+                this.p= create_path(this.points_array);
+            //add id to the path
+                node_id=1;
+                this.p.setAttribute("id", "path_"+node_id);
+            //add the path to the dom
+                 this.content_box_svg.appendChild( this.p);
+                $('#path_'+node_id).click(()=>{
+                    alert("clicked"); 
+                });
+
+
+        }
+        
+        var find_connection_points_pair = function(from_object , to_object)
+        {
+            let end_points = {
+                                from_point :{},
+                                to_point : {}
+                             }
+
+            if( from_object.right.x <= to_object.left.x)//to is on the right condition
+            {
+                end_points.from_point=from_object.right;
+                end_points.to_point = to_object.left;
+            }
+            else if(from_object.left.x <= to_object.right.x) //to is on the left condition
+            {
+                end_points.from_point=from_object.left;
+                end_points.to_point = to_object.right;
+            }
+            else
+            {
+                if(from_object.top.y > to_object.top.y)
+                {
+                    end_points.from_point=from_object.bottom;
+                    end_points.to_point = to_object.top;
+                }
+                if(from_object.bottom.y , to_object.bottom.y)
+                {
+                    end_points.from_point=from_object.top;
+                    end_points.to_point = to_object.bottom;
+                }
+            }
+            return end_points;
+
+        }
+        
+        base_svg=create_svg(0,0,1500,1500);
+        // start_point=       {x:"300"   , y:"341"   };
+        // end_point=         {x:"0"  , y:"0"   };
+        // draw_dot(start_point,5,base_svg)
+        // // draw_dot(end_point,5,base_svg)
+        // new_path = new creat_right_path(start_point, end_point , base_svg)
+        
+
+        x=100
+        y=100
+        w=100
+        h=100
+
+        x2=500
+        y2=500
+
+
+       connection_points1 = {
+                                          top:    {label:"top" , x:x+w/2 , y:y } ,
+                                          right:  {label:"right" , x:x+w   , y:y+h/2 } , 
+                                          bottom: {label:"bottom" , x:x+w/2 , y:y+h } ,
+                                          left:   {label:"left" , x:x     , y:y+h/2 }
+                            };
+
+        connection_points2 = {
+            top:    {label:"top" , x:x2+w/2 , y:y2 } ,
+            right:  {label:"right" , x:x2+w   , y:y2+h/2 } , 
+            bottom: {label:"bottom" , x:x2+w/2 , y:y2+h } ,
+            left:   {label:"left" , x:x2     , y:y2+h/2 }
+        };
+
+
+        for (const property in connection_points1) {
+            
+            draw_dot(connection_points1[property],2,base_svg)
+        }
+        for (const property in connection_points2) {
+            
+            draw_dot(connection_points2[property],2,base_svg)
+        }
+
+        path_end_points = find_connection_points_pair(connection_points1 , connection_points2)
+        new_path = new creat_right_path(path_end_points.from_point, path_end_points.to_point , base_svg)
+
+
+    </script>
+
+</body>
+</html>

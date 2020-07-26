@@ -5,6 +5,7 @@
 }
 #node_resizer_id
 {
+  color: #0000ff;
     overflow: hidden;
     position: fixed;
     /* position: relative; */

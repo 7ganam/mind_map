@@ -115,6 +115,14 @@
 
         }
 
+
+
+
+
+
+
+
+
         //resizer class
         function resizer(node_id,x,y,w,h) {
             this.node_id = node_id;
@@ -186,34 +194,45 @@
         }
         
         //node class
-        function node(node_id,x,y,w,h)
-        {
-            this.node_id=node_id;
-            this.content_box = new node_content_box(node_id,x,y,w,h);
-            this.resizer     = new resizer(node_id,x+w,y+h,10,10);
-            
-            this.get_x = ()=> {
-                var pos_obj = $('#node_content_box_'+this.node_id).position();
-                content_box_x =pos_obj.left;
-                return content_box_x;
-            };
-            this.get_y = ()=> {
-                var pos_obj = $('#node_content_box_'+this.node_id).position();
-                content_box_y =pos_obj.top;
-                return content_box_y;
-            };
-            this.get_width = ()=> {
-                var width = document.getElementById('node_content_box_'+this.node_id).getAttribute("width");
-                return width;
-            };            
-            this.get_height = ()=> {
-                var height = document.getElementById('node_content_box_'+this.node_id).getAttribute("height");
-                return height;
-            };
+
+       
+       
+        class node {
+            constructor(node_id,x,y,w,h)
+            {
+                this.node_id=node_id;
+                this.content_box = new node_content_box(node_id,x,y,w,h);
+                this.resizer     = new resizer(node_id,x+w,y+h,10,10);
+                this.get_x = ()=> {
+                    var pos_obj = $('#node_content_box_'+this.node_id).position();
+                    content_box_x =pos_obj.left;
+                    return content_box_x;
+                };
+                this.get_y = ()=> {
+                    var pos_obj = $('#node_content_box_'+this.node_id).position();
+                    content_box_y =pos_obj.top;
+                    return content_box_y;
+                };
+                this.get_width = ()=> {
+                    var width = document.getElementById('node_content_box_'+this.node_id).getAttribute("width");
+                    return width;
+                };            
+                this.get_height = ()=> {
+                    var height = document.getElementById('node_content_box_'+this.node_id).getAttribute("height");
+                    return height;
+                    };
+            }
 
         }
-       
-       
+
+//    let s1 = new Student(101,'Sachin','Tendulkar')
+//    console.log(s1)
+//    //setter is called
+//    s1.rollno = 201
+//    console.log(s1)
+
+
+
         let node_3 = new node(3,200,100,85,85);
         let node_2 = new node(2,200,200,100,300);
         let node_1 = new node(1,200,200,85,85);

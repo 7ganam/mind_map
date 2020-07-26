@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<!-- # TODO: get rid of the need to make margin =0 -->
+<body id="body" style="margin: 0;">
+
+    <div>
+    </div>
+
+    <script src="g_svg_class.js"> </script>
+    <script src="global_shape_creator_class.js"> </script>
+    <script src="shape_class.js"> </script>
+    <script src="element_class.js"> </script>
+    <script src="node_cores_classes.js"> </script>
+    <script src="node_shell_class.js"> </script>
+
+    <script>
+
+
+        Id=1;
+        x=100;
+        y = 100;
+        w=100;
+        h=100;
+
+        Id2=2;
+        x2=200;
+        y2 = 200;
+        w2=85;
+        h2=85;
+
+        my_node= new node_shell(Id,x,y,w,h)
+
+        // my_node.node_core.draw();
+
+
+        my_node2= new node_shell(Id2,x2,y2,w2,h2)
+        my_node3= new node_shell(3,x2,y2,w2,h2)
+
+        node_array = [my_node , my_node2]
+        node_array.forEach(element => {
+            element.node_core.draw();
+        });
+
+        my_node2.set_node_son(my_node);
+
+        // my_node2= new node_shell(Id2,x2,y2,w2,h2)
+        // my_node2.set_node_core("red");
+
+
+
+
+    </script>
+    
+
+</body>
+</html>

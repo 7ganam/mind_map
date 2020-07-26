@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>path_test</title>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+<body>
+
+    <svg height="4000" width="4000">
+        <!-- <path id="lineAB" d="M 25,75 Q 50,150 75,100 T 250,250"  stroke="green" stroke-width="3" fill="none" /> -->
+        <!-- <path id="lineAB" d="M 50,50 L 100,100 l 25,0"  stroke="green" stroke-width="3" fill="none" /> -->
+
+
+        <!-- Mark relevant points -->
+        <g stroke="black" stroke-width="3" fill="black">
+            <circle id="pointA" cx="100" cy="300" r="3" />
+            <circle id="pointB" cx="250" cy="200" r="3" />
+            <circle id="pointC" cx="400" cy="100" r="3" />
+        </g>
+    </svg>
+
+
+    <script>
+        var create_svg=function(x,y,w,h,points_array)
+        {
+            var max_y=-Infinity;
+            var min_y=Infinity;
+            var max_x=-Infinity;
+            var min_x=Infinity;
+
+                max_x = Math.max.apply(Math, points_array.map(function(point) { return point.cx; }));
+                max_y = Math.max.apply(Math, points_array.map(function(point) { return point.cy; }));
+                min_x = Math.min.apply(Math, points_array.map(function(point) { return point.cx; }));
+                min_y = Math.min.apply(Math, points_array.map(function(point) { return point.cy; }));
+
+            // var x=min_x;
+            // var y = min_y;
+            var w = max_x - min_x;
+            var h = max_y - min_y;
+            var NS="http://www.w3.org/2000/svg";
+            var svg=document.createElementNS(NS,"svg");
+            //set svg style
+                svg.style.border= "1px solid black";
+                svg.style.position= "fixed";
+                svg.style.top= y + "px";  //position relative to the window
+                svg.style.left= x + "px";
+
+            //set svg attributes
+                svg.setAttribute("height", h);
+                svg.setAttribute("width", w);
+
+            return svg;
+        }
+
+        var create_path =function(points_array)
+        {
+                
+            console.log(points_array);
+                //create path string
+                var d_string ="";
+                d_string = "M " + points_array[0].cx+"," + points_array[0].cy + " ";
+                for(let i = 1;    i < (points_array.length-1)   ; i++)
+                { 
+                    // console.log(points_array[i]);
+                    d_string =d_string+ "L " + points_array[i].cx+"," + points_array[i].cy + " ";
+                }
+                d_string =d_string+ "L " + points_array[points_array.length-1].cx+"," + points_array[points_array.length-1].cy + " ";
+                
+                
+
+           
+                var NS="http://www.w3.org/2000/svg";
+                var SVGObj= document.createElementNS('http://www.w3.org/2000/svg',"path");  
+                SVGObj.setAttributeNS(null, "d", d_string);
+           // SVGObj.setAttributeNS(null, "d", "M 100,300 C 175,300 250,300 250,200 S 325,100 400,100");
+                SVGObj.setAttribute("stroke", "green");
+                SVGObj.setAttribute("stroke-width", 3);
+                SVGObj.setAttribute("fill", "none");
+                return SVGObj;
+
+        }
+
+        points_array =
+
+                [
+                 {cx:"0"   , cy:"0"   , r:"3"},
+                 {cx:"100" , cy:"300" , r:"3"},
+                 {cx:"250" , cy:"200" , r:"3"},
+                 {cx:"400" , cy:"400" , r:"3"},
+                 {cx:"500" , cy:"400" , r:"3"},
+                 {cx:"500" , cy:"500" , r:"3"}
+                ];
+
+        //create svg of the content box
+            var content_box_svg=create_svg(100,100,500,500,points_array);
+        //add the svg box to the dom
+            document.body.appendChild(content_box_svg);
+        //create rectangle 
+            var  r= create_path(points_array);
+        //add id to the rectangle
+            node_id=1;
+            this.r.setAttribute("id", "path_"+node_id);
+        //add the rectangle to the dom
+            content_box_svg.appendChild( r);
+            $('#path_'+node_id).click(()=>{
+                alert("clicked"); 
+            });
+
+    </script>
+
+</body>
+</html>
