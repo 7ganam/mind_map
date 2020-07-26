@@ -63,9 +63,9 @@
         document.body.appendChild(base_svg);
 
         my_node2= new node_shell(Id2,x2,y2,w2,h2)
-        my_node3= new node_shell(3,x2,y2,w2,h2)
+        my_node3= new node_shell(77,x2,y2,w2,h2)
 
-        node_array = [my_node , my_node2]
+        node_array = [my_node , my_node2 , my_node3]
         node_array.forEach(element => {
             element.node_core.draw();
         });
@@ -88,6 +88,29 @@
         }
   
         my_path1= new path_shell(1,base_svg,my_node,my_node2)
+        my_path2= new path_shell(12,base_svg,my_node2,my_node3)
+
+
+        paths_array=[]
+        paths_array.push(my_path1)
+        paths_array.push(my_path2)
+
+
+
+        update_paths = function(node)
+        {
+            paths_to_be_ubdated = paths_array.filter(function(path_i){
+                    return (path_i.from_node_shell ===node || path_i.to_node_shell ===node )
+
+            });
+
+            paths_to_be_ubdated.forEach(myFunction);
+
+            function myFunction(path_i, index) {
+                path_i.path_core.update_right_path()
+            }
+        }
+
 
     </script>
     

@@ -36,12 +36,11 @@
             var y =this.get_y();
             var w =this.get_width();
             var h =this.get_height();
-            this. connection_points =   {
-                                            top:    {label:"top" , x:x+w/2 , y:y } ,
-                                            right:  {label:"right" , x:x+w   , y:y+h/2 } , 
-                                            bottom: {label:"bottom" , x:x+w/2 , y:y+h } ,
-                                            left:   {label:"left" , x:x     , y:y+h/2 }
-                                        };
+            this. connection_points.top=   {label:"top" , x:x+w/2 , y:y } ;
+            this. connection_points.right=  {label:"right" , x:x+w   , y:y+h/2 } ; 
+            this. connection_points.bottom= {label:"bottom" , x:x+w/2 , y:y+h } ;
+            this. connection_points.left=  {label:"left" , x:x     , y:y+h/2 };
+                                       
         }
         get_x = function()
         {
@@ -112,11 +111,10 @@
                             document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"resizer")[0].style.left=(new_x - body_event_handler.click_in_content_box_x + width ) + "px";
                         
                         //reset node connection_points position:
-                        this.update_connection_points();
+                            this.update_connection_points();
 
-                                                              
-
-
+                        //update related paths
+                            update_paths(this.containing_node_shell_shell)
                     } ;
 
 
@@ -190,9 +188,12 @@
                         document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"resizer")[0].style.top= (new_resizer_y ) + "px";
 
                         document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"resizer")[0].style.left=(new_resizer_x ) + "px";
-                        //reset node connection_points position 
                         //reset node connection_points position:
                         this.update_connection_points();
+
+
+                        //update related paths
+                        update_paths(this.containing_node_shell_shell)
 
                     };
 

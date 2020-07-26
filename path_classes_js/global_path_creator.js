@@ -22,5 +22,19 @@ class global_path_creator
         return SVGObj;
 
     }
-    
+
+    static create_path_d_string=function(points_array)
+    {
+            //create path string
+            var d_string ="";
+            d_string = "M " + points_array[0].x+"," + points_array[0].y + " ";
+            for(let i = 1;    i < (points_array.length-1)   ; i++)
+            { 
+                // console.log(points_array[i]);
+                d_string =d_string+ "L " + points_array[i].x+"," + points_array[i].y + " ";
+            }
+            d_string =d_string+ "L " + points_array[points_array.length-1].x+"," + points_array[points_array.length-1].y + " ";
+            return d_string;
+
+    }
 }
