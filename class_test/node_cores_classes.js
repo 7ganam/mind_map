@@ -1,20 +1,20 @@
 
     class default_node_core
     {
-        constructor(containing_node_shell_shell,x,y,w,h)
+        constructor(node_shell,x,y,w,h)
         {
             //create the body element
-                this.containing_node_shell_shell=containing_node_shell_shell;
-                this.node_id = containing_node_shell_shell.node_id;
+                this.node_shell=node_shell;
+                this.node_id = node_shell.node_id;
                 //create a specific shape for this core .. this may change for each core type
                 var body_html_shape=golpal_shape_creator.create_rectangle(2,2,w-4,h-4,"blue");
-                this.node_body=new element(containing_node_shell_shell.node_id,"node_body",body_html_shape,x,y,w,h);
-                // this.node_body.draw();
+                this.body_element=new element(node_shell.node_id,"body_element",body_html_shape,x,y,w,h);
+                // this.body_element.draw();
 
             //create the resizer element
                 var resizer_html_shape=golpal_shape_creator.create_rectangle(0,0,10,10,"blue");
-                this.node_resizer=new element(containing_node_shell_shell.node_id,"resizer",resizer_html_shape,x+w,y+h,10,10);
-                // this.node_resizer.draw();
+                this.resizer_element=new element(node_shell.node_id,"resizer",resizer_html_shape,x+w,y+h,10,10);
+                // this.resizer_element.draw();
 
             // set up the event handling functionality
                 this.set_body_event_handler(this);
@@ -45,35 +45,35 @@
         }
         get_x = function()
         {
-            var pos_obj = $("#svg_"+this.node_id+'.'+"node_body").position();
+            var pos_obj = $("#svg_"+this.node_id+'.'+"body_element").position();
             var body_x =pos_obj.left;
             return body_x;
             var body_y =pos_obj.top;
         }
         get_y = function()
         {
-            var pos_obj = $("#svg_"+this.node_id+'.'+"node_body").position();
+            var pos_obj = $("#svg_"+this.node_id+'.'+"body_element").position();
             var body_y =pos_obj.top;
             return body_y;
         }
         get_width = function()
         {
-            var width = document.querySelectorAll("#svg_"+this.node_id+'.'+"node_body")[0].getAttribute("width");
+            var width = document.querySelectorAll("#svg_"+this.node_id+'.'+"body_element")[0].getAttribute("width");
             width = Number(width);
             return width
 
         }
         get_height = function()
         {
-            var height = document.querySelectorAll("#svg_"+this.node_id+'.'+"node_body")[0].getAttribute("height");
+            var height = document.querySelectorAll("#svg_"+this.node_id+'.'+"body_element")[0].getAttribute("height");
             height= Number(height);
             return height
 
         }
         draw = function()
         {
-            this.node_body.draw();
-            this.node_resizer.draw();
+            this.body_element.draw();
+            this.resizer_element.draw();
             this.set_body_event_handler(this);
             this.set_resizer_event_handler(this);
         }
@@ -103,8 +103,8 @@
                             if(event.clientY < 0)
                             {    new_y = 0;  }
                         //reset node position to the new values
-                            document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"node_body")[0].style.top= (new_y - body_event_handler.click_in_content_box_y) + "px";
-                            document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"node_body")[0].style.left=(new_x - body_event_handler.click_in_content_box_x) + "px";
+                            document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"body_element")[0].style.top= (new_y - body_event_handler.click_in_content_box_y) + "px";
+                            document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"body_element")[0].style.left=(new_x - body_event_handler.click_in_content_box_x) + "px";
                         //reset node resizer position 
                             let width = this.get_width();
                             let height= this.get_height();
@@ -126,9 +126,9 @@
 
                 //TODO: somehow the events are attached to the object before even it's added to the dom i don't understand how the jquery did that.
                 //TODO: check the possibility of setting the events based on the html objects directly from js without having to fetch them from the dom 
-                $("#svg_"+containing_node_core.node_id+'.'+"node_body").mousedown((event)=>{
+                $("#svg_"+containing_node_core.node_id+'.'+"body_element").mousedown((event)=>{
                         //find the position of the click relative to the upper left corner of the node
-                        var pos_obj = $("#svg_"+containing_node_core.node_id+'.'+"node_body").position();
+                        var pos_obj = $("#svg_"+containing_node_core.node_id+'.'+"body_element").position();
                         var body_x =pos_obj.left;
                         var body_y =pos_obj.top;
                         body_event_handler.click_in_content_box_x = event.pageX - body_x;
@@ -140,7 +140,7 @@
                     body_event_handler.clicking = false;
                         window.onmousemove = null;
                     })
-                $("#svg_"+containing_node_core.node_id+'.'+"node_body").mousemove(()=>{
+                $("#svg_"+containing_node_core.node_id+'.'+"body_element").mousemove(()=>{
                     if(body_event_handler.clicking == false) return;
                     // Mouse click + moving logic here
                     window.onmousemove = body_event_handler.handle_item_drag;
@@ -164,7 +164,7 @@
                         var new_resizer_x = event.clientX; //position of the resizer is the same as the position of the cursor as it moves
                         var new_resizer_y= event.clientY;
 
-                        var pos_obj = $("#svg_"+containing_node_core.node_id+'.'+"node_body").position(); // position of the body the resizer attached to
+                        var pos_obj = $("#svg_"+containing_node_core.node_id+'.'+"body_element").position(); // position of the body the resizer attached to
                         var body_x =pos_obj.left;
                         var body_y =pos_obj.top;
                         //prevent item from getting smaller than a specific size .. 
@@ -181,11 +181,11 @@
 
                         //change the size of the node 
                         //resize the svg
-                        $("#svg_"+containing_node_core.node_id+'.'+"node_body").attr('height', new_node_height);
-                        $("#svg_"+containing_node_core.node_id+'.'+"node_body").attr('width', new_node_width);
+                        $("#svg_"+containing_node_core.node_id+'.'+"body_element").attr('height', new_node_height);
+                        $("#svg_"+containing_node_core.node_id+'.'+"body_element").attr('width', new_node_width);
                         //resize the svg content
-                        $("#shape_"+containing_node_core.node_id+'.'+"node_body").attr('height', new_node_height-5);
-                        $("#shape_"+containing_node_core.node_id+'.'+"node_body").attr('width', new_node_width-5);
+                        $("#shape_"+containing_node_core.node_id+'.'+"body_element").attr('height', new_node_height-5);
+                        $("#shape_"+containing_node_core.node_id+'.'+"body_element").attr('width', new_node_width-5);
                         //reset node resizer position 
                         document.querySelectorAll("#svg_"+containing_node_core.node_id+'.'+"resizer")[0].style.top= (new_resizer_y ) + "px";
 

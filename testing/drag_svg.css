@@ -3,7 +3,7 @@
   position: fixed;
   /* position: relative; */
 }
-#node_resizer_id
+#resizer_element_id
 {
   color: #0000ff;
     overflow: hidden;

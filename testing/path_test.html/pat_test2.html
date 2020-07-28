@@ -62,7 +62,7 @@
 
         }
 
-        var creat_right_path = function(start_point, end_point ,base_svg)
+        var create_path = function(start_point, end_point ,base_svg)
         {
 
             let middle_x = Math.min(start_point.x, end_point.x) + Math.abs(start_point.x-end_point.x)/2;
@@ -100,34 +100,34 @@
 
         }
         
-        var find_connection_points_pair = function(from_object , to_object)
+        var find_connection_points_pair = function(from_connection_points , to_connection_points)
         {
             let end_points = {
                                 from_point :{},
                                 to_point : {}
                              }
 
-            if( from_object.right.x <= to_object.left.x)//to is on the right condition
+            if( from_connection_points.right.x <= to_connection_points.left.x)//to is on the right condition
             {
-                end_points.from_point=from_object.right;
-                end_points.to_point = to_object.left;
+                end_points.from_point=from_connection_points.right;
+                end_points.to_point = to_connection_points.left;
             }
-            else if(from_object.left.x <= to_object.right.x) //to is on the left condition
+            else if(from_connection_points.left.x <= to_connection_points.right.x) //to is on the left condition
             {
-                end_points.from_point=from_object.left;
-                end_points.to_point = to_object.right;
+                end_points.from_point=from_connection_points.left;
+                end_points.to_point = to_connection_points.right;
             }
             else
             {
-                if(from_object.top.y > to_object.top.y)
+                if(from_connection_points.top.y > to_connection_points.top.y)
                 {
-                    end_points.from_point=from_object.bottom;
-                    end_points.to_point = to_object.top;
+                    end_points.from_point=from_connection_points.bottom;
+                    end_points.to_point = to_connection_points.top;
                 }
-                if(from_object.bottom.y , to_object.bottom.y)
+                if(from_connection_points.bottom.y , to_connection_points.bottom.y)
                 {
-                    end_points.from_point=from_object.top;
-                    end_points.to_point = to_object.bottom;
+                    end_points.from_point=from_connection_points.top;
+                    end_points.to_point = to_connection_points.bottom;
                 }
             }
             return end_points;
@@ -139,7 +139,7 @@
         // end_point=         {x:"0"  , y:"0"   };
         // draw_dot(start_point,5,base_svg)
         // // draw_dot(end_point,5,base_svg)
-        // new_path = new creat_right_path(start_point, end_point , base_svg)
+        // new_path = new create_path(start_point, end_point , base_svg)
         
 
         x=100
@@ -175,7 +175,7 @@
         }
 
         path_end_points = find_connection_points_pair(connection_points1 , connection_points2)
-        new_path = new creat_right_path(path_end_points.from_point, path_end_points.to_point , base_svg)
+        new_path = new create_path(path_end_points.from_point, path_end_points.to_point , base_svg)
 
 
     </script>
