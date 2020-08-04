@@ -1,101 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  </head>
+  <!-- # TODO: get rid of the need to make margin =0 -->
 
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
-<!-- # TODO: get rid of the need to make margin =0 -->
-<body id="body" style="margin: 0;">
+  <body id="body" style="margin: 0;">
+    <div></div>
+    <script src="node_classes_js/g_svg_class.js"></script>
+    <script src="node_classes_js/global_shape_creator_class.js"></script>
+    <script src="node_classes_js/shape_class.js"></script>
+    <script src="node_classes_js/element_class.js"></script>
+    <script src="node_classes_js/node_cores_classes.js"></script>
+    <script src="node_classes_js/node_shell_class.js"></script>
 
-    <div>
-    </div>
-    <script src="node_classes_js/g_svg_class.js"> </script>
-    <script src="node_classes_js/global_shape_creator_class.js"> </script>
-    <script src="node_classes_js/shape_class.js"> </script>
-    <script src="node_classes_js/element_class.js"> </script>
-    <script src="node_classes_js/node_cores_classes.js"> </script>
-    <script src="node_classes_js/node_shell_class.js"> </script>
+    <script src="path_classes_js/global_d_string_creator.js"></script>
+    <script src="path_classes_js/path_core.js"></script>
+    <script src="path_classes_js/path_shell.js"></script>
 
-    <script src="path_classes_js/global_d_string_creator.js"> </script>
-    <script src="path_classes_js/path_core.js"> </script>
-    <script src="path_classes_js/path_shell.js"> </script>
+    <script src="Engine_class_js/Engine_class.js"></script>
 
     <script>
-        var draw_dot= function(point_object,r,svg_container){
-            var svgns = "http://www.w3.org/2000/svg";
-            container = svg_container;
-            var circle = document.createElementNS(svgns, 'circle');
-            circle.setAttributeNS(null, 'cx', point_object.x);
-            circle.setAttributeNS(null, 'cy', point_object.y);
-            circle.setAttributeNS(null, 'r', r);
-            container.appendChild(circle);
-        }
+      var draw_dot = function (point_object, r, svg_container) {
+        var svgns = "http://www.w3.org/2000/svg";
+        container = svg_container;
+        var circle = document.createElementNS(svgns, "circle");
+        circle.setAttributeNS(null, "cx", point_object.x);
+        circle.setAttributeNS(null, "cy", point_object.y);
+        circle.setAttributeNS(null, "r", r);
+        container.appendChild(circle);
+      };
 
-        var create_svg=function(x,y,w,h){
-            var NS="http://www.w3.org/2000/svg";
-            var svg=document.createElementNS(NS,"svg");
-            //set svg style
-                svg.style.border= "1px solid black";
-                svg.style.position= "fixed";
-                svg.style.top= y + "px";  //position relative to the window
-                svg.style.left= x + "px";
-            //set svg attributes
-                svg.setAttribute("height", h);
-                svg.setAttribute("width", w);
+      Engine = new Engine();
+      Engine.create_node(100, 100, 100, 100);
+      Engine.create_node(300, 300, 100, 100);
+      Engine.create_node(500, 500, 100, 100);
+      Engine.create_node(500, 700, 100, 100);
+      Engine.draw_nodes();
 
-            return svg;
-        }
-
-
-        base_svg=create_svg(0,0,1500,1500);
-        document.body.appendChild(base_svg);
-        
-        Id=1; x=100;  y = 100;  w=100; h=100;
-        Id2=2;x2=100; y2 = 500; w2=85; h2=85;
-
-        my_node= new node_shell(Id,x,y,w,h)
-        my_node2= new node_shell(Id2,x2,y2,w2,h2)
-        my_node3= new node_shell(77,x2,y2,w2,h2)
-        node_array = [my_node , my_node2 , my_node3]
-        my_node2.set_node_son(my_node);
-
-        node_array.forEach(element => {
-            element.node_core.draw();
-        });
-
-        // my_node.node_core.draw();
-
-
-
-        my_path1= new path_shell(1,base_svg,my_node,my_node2)
-        my_path2= new path_shell(12,base_svg,my_node,my_node3)
-
-
-        paths_array=[]
-        paths_array.push(my_path1)
-        paths_array.push(my_path2)
-
-
-
-        update_paths = function(node)
-        {
-            paths_to_be_ubdated = paths_array.filter(function(path_i){
-                    return (path_i.from_node_shell ===node || path_i.to_node_shell ===node )
-            });
-
-            paths_to_be_ubdated.forEach(myFunction);
-
-            function myFunction(path_i, index) {
-                path_i.path_core.update_right_path()
-            }
-        }
-
-
+      Engine.add_son(Engine.node_array[0], Engine.node_array[1]);
+      Engine.add_son(Engine.node_array[1], Engine.node_array[2]);
     </script>
-    
-
-</body>
+  </body>
 </html>

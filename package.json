@@ -1,0 +1,22 @@
+{
+  "name": "mind_maps_project",
+  "version": "1.0.0",
+  "description": "my personal coggle_like mind map app   ## todos: - [X] build the node class - [X] path algorithm - [ ] document the path logic and update the uml - [ ] git rid of redundent svgs in the node_core class - [ ] update the UML - [ ] build engine class - [ ] add path algotithm to the engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7ganam/mind_map.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/7ganam/mind_map/issues"
+  },
+  "homepage": "https://github.com/7ganam/mind_map#readme",
+  "devDependencies": {
+    "eslint": "^7.5.0"
+  }
+}
