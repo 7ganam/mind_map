@@ -16,3 +16,7 @@ my personal coggle_like mind map app
 - [x] update the UML
 - [x] build engine class
 - [x] add path algotithm to the engine
+- [ ] try documentation library
+- [ ] do the add delete node from connection points function
+- [ ] add the text addition function
+- [ ] add the image addition featue
