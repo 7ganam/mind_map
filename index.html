@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  </head>
-  <!-- # TODO: get rid of the need to make margin =0 -->
 
-  <body id="body" style="margin: 0;">
-    <div></div>
-    <script src="node_classes_js/g_svg_class.js"></script>
-    <script src="node_classes_js/global_shape_creator_class.js"></script>
-    <script src="node_classes_js/shape_class.js"></script>
-    <script src="node_classes_js/element_class.js"></script>
-    <script src="node_classes_js/node_cores_classes.js"></script>
-    <script src="node_classes_js/node_shell_class.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <title>Title</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<!-- # TODO: get rid of the need to make margin =0 -->
 
-    <script src="path_classes_js/global_d_string_creator.js"></script>
-    <script src="path_classes_js/path_core.js"></script>
-    <script src="path_classes_js/path_shell.js"></script>
+<body id="body" style="margin: 0;">
+  <div></div>
+  <script src="node_classes_js/g_svg_class.js"></script>
+  <script src="node_classes_js/global_shape_creator_class.js"></script>
+  <script src="node_classes_js/shape_class.js"></script>
+  <script src="node_classes_js/element_class.js"></script>
+  <script src="node_classes_js/node_cores_classes.js"></script>
+  <script src="node_classes_js/node_shell_class.js"></script>
 
-    <script src="Engine_class_js/Engine_class.js"></script>
+  <script src="path_classes_js/global_d_string_creator.js"></script>
+  <script src="path_classes_js/path_core.js"></script>
+  <script src="path_classes_js/path_shell.js"></script>
 
-    <script>
-      var draw_dot = function (point_object, r, svg_container) {
-        var svgns = "http://www.w3.org/2000/svg";
-        container = svg_container;
-        var circle = document.createElementNS(svgns, "circle");
-        circle.setAttributeNS(null, "cx", point_object.x);
-        circle.setAttributeNS(null, "cy", point_object.y);
-        circle.setAttributeNS(null, "r", r);
-        container.appendChild(circle);
-      };
+  <script src="Engine_class_js/Engine_class.js"></script>
 
-      Engine = new Engine();
-      Engine.create_node(100, 100, 100, 100);
-      Engine.create_node(300, 300, 100, 100);
-      Engine.create_node(500, 500, 100, 100);
-      Engine.create_node(500, 700, 100, 100);
-      Engine.draw_nodes();
+  <script>
+    var draw_dot = function (point_object, r, svg_container) {
+      var svgns = "http://www.w3.org/2000/svg";
+      container = svg_container;
+      var circle = document.createElementNS(svgns, "circle");
+      circle.setAttributeNS(null, "cx", point_object.x);
+      circle.setAttributeNS(null, "cy", point_object.y);
+      circle.setAttributeNS(null, "r", r);
+      container.appendChild(circle);
+    };
 
-      Engine.add_son(Engine.node_array[0], Engine.node_array[1]);
-      Engine.add_son(Engine.node_array[1], Engine.node_array[2]);
-    </script>
-  </body>
+    //TODO: document the classes
+    Engine = new Engine();
+    Engine.create_node(100, 100, 100, 100);
+    Engine.create_node(300, 300, 100, 100);
+    Engine.create_node(500, 500, 100, 100);
+    Engine.create_node(500, 700, 100, 100);
+    Engine.draw_nodes();
+
+    Engine.add_son(Engine.node_array[0], Engine.node_array[1]);
+    Engine.add_son(Engine.node_array[1], Engine.node_array[2]);
+  </script>
+</body>
+
 </html>
