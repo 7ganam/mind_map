@@ -4,8 +4,6 @@ my personal coggle_like mind map app
 
 ## todos:
 
-<<<<<<< HEAD
-
 - [x] build the node class
 - [x] path algorithm
 - [x] # document the path logic and update the uml
