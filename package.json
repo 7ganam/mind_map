@@ -1,10 +1,12 @@
 {
   "name": "mind_maps_project",
   "version": "1.0.0",
-  "description": "my personal coggle_like mind map app   ## todos: - [X] build the node class - [X] path algorithm - [ ] document the path logic and update the uml - [ ] git rid of redundent svgs in the node_core class - [ ] update the UML - [ ] build engine class - [ ] add path algotithm to the engine",
-  "main": "index.js",
+  "description": "my personal coggle_like mind map app",
+  "main": ".eslintrc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "doc": "node_modules/jsdoc/jsdoc.js ./node_classes_js/  ./Engine_class_js/ ./path_classes_js",
+    "doc2": "node_modules/jsdoc/jsdoc.js -c jsdoc.json",
+    "doc:watch": "onchange  -v 'node_classes_js/*.js' 'Engine_class_js/*.js' 'path_classes_js/*.js' -- npm run doc2"
   },
   "repository": {
     "type": "git",
@@ -16,7 +18,12 @@
     "url": "https://github.com/7ganam/mind_map/issues"
   },
   "homepage": "https://github.com/7ganam/mind_map#readme",
+  "dependencies": {
+    "jsdoc": "^3.6.5",
+    "onchange": "^7.0.2"
+  },
   "devDependencies": {
-    "eslint": "^7.5.0"
+    "better-docs": "^2.3.0",
+    "jsdoc-mermaid": "^1.0.0"
   }
 }

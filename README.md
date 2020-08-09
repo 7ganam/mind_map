@@ -15,6 +15,15 @@ my personal coggle_like mind map app
 - [x] build engine class
 - [x] add path algotithm to the engine
 - [ ] try documentation library
+- [ ] write the node_core abstract class
 - [ ] do the add delete node from connection points function
 - [ ] add the text addition function
 - [ ] add the image addition featue
+- [ ] design the base_svg object and how it expands
+
+## todos:
+
+house keeping stuff:
+
+- [ ] add my jsdoc routine to g-code-blocks repo
+- [ ] standardize how to the dom elements are labeled before implenting any new eventhandlers

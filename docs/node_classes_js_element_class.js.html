@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> node_classes_js/element_class.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Engine.html">Engine</a></li></ul></div><div class="category"><h2>node classes</h2><h3>Classes</h3><ul><li><a href="default_node_core.html">default_node_core</a></li><li><a href="element.html">element</a></li><li><a href="G_SVG.html">G_SVG</a></li><li><a href="golpal_shape_creator.html">golpal_shape_creator</a></li><li><a href="node_shell.html">node_shell</a></li><li><a href="shape.html">shape</a></li></ul></div><div class="category"><h2>path classes</h2><h3>Classes</h3><ul><li><a href="default_path_core.html">default_path_core</a></li><li><a href="global_d_string_creator.html">global_d_string_creator</a></li><li><a href="path_shell.html">path_shell</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>node_classes_js/element_class.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** Class defining the element to be added to the dom and its meta data.
+ * @category node classes
+ */
+class element {
+    /**
+     * constructor .. passed an html_shape the constructor creates an svg object and appends the shape in it .. it doesn't add them to the dom untill the draw() member function is called separately
+     * @param {string} id 
+     * @param {string} passed_class  - the class that will be added to the element object of the dom
+     * @param {object} html_shape  - the html shape that will be drawn in an svg container representing the shape of the elment in the browser
+     * @param {number} x - The x position of the top left corenr of the node relative to the window.
+     * @param {number} y - The y position of the top left corenr of the node relative to the window.
+     * @param {number} w - The width in pixles
+     * @param {number} h - The height in pixles
+     */
+    constructor(id, passed_class, html_shape, x, y, w, h) {
+        /** @member {string}  */
+        this.id = id;
+        /** @member {string}  */
+        this.passed_class = passed_class;
+        /** @member {G_SVG}  */
+        this.G_SVG = new G_SVG(id, this.passed_class + " " + id, x, y, w, h); //create svg object
+        /** @member {shape}  */
+        this.shape = new shape(id, this.passed_class + " " + id) //create empty shape object
+        this.shape.set_html_shape(html_shape); // fill the shape object
+    }
+    /**
+     * add the svg box to dom as a child of document.body .. then add the shape as a child of it
+     * it depends that both {@link element#G_SVG} and {@link element#shape} object have a draw() metho of their own and just exploits them.
+     * @return {void}.
+     */
+    draw() {
+        this.G_SVG.draw(document.body);
+        this.shape.draw(this.G_SVG.svg_html_object);
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.5</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
