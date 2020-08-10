@@ -30,12 +30,14 @@ class Engine {
    * @param {number} y - The y position of the top left corenr of the node relative to the window.
    * @param {number} w - The width in pixles
    * @param {number} h - The height in pixles
-   * @return {void}.
+   * @return {node_shell}.
    */
   create_node(x, y, w, h) {
     var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     var uniqid = randLetter + Date.now();
-    this.nodes_array.push(new node_shell(this, uniqid, x, y, w, h));
+    let new_node_shell = new node_shell(this, uniqid, x, y, w, h);
+    this.nodes_array.push(new_node_shell);
+    return new_node_shell
   }
   /**
    * create a path_shell connecting two nodes using the default node_core and add it to the paths_array {@link Engine#paths_array} .. the graph is drawn automatically in the dom
@@ -57,7 +59,7 @@ class Engine {
    */
   draw_nodes() {
     this.nodes_array.forEach((node_shell) => {
-      node_shell.node_core.draw();
+      node_shell.node_core.draw_and_set_event_handlers();
     });
   }
   /**
@@ -91,7 +93,6 @@ class Engine {
       });
     });
   };
-
   /**
    * whenever a node changes its position it should call this function to loop over the nodes_array  {@link Engine#nodes_array} and update only the paths that are connected to this node... this function is called by node_cores event handlers that handle the nodes positioning and resizing
    * @return {void}
@@ -106,6 +107,39 @@ class Engine {
       path_i.path_core.update_path();
     }
   };
+  /**
+   * delete node from the nodes_array  {@link Engine#nodes_array} and all related elements from the dom .. delete all related paths from the dom and the paths_array {@link Engine#paths_array} 
+   * @return {void}
+   */
+  delete_node(node_shell) {
+    let node_id = node_shell.node_id;
+    //remove the element from the dom
+    $("." + node_id).remove();
+    // remove the element from the nodes_array
+    for (var i = this.nodes_array.length - 1; i >= 0; --i) {
+      if (this.nodes_array[i].node_id == node_id) {
+        this.nodes_array.splice(i, 1);
+      }
+    }
+    //remove any related path from the dom
+    let paths_to_be_ubdated = this.paths_array.filter(function (path_i) {
+      return path_i.from_node_shell === node_shell || path_i.to_node_shell === node_shell;
+    });
+    paths_to_be_ubdated.forEach((path_i, index) => {
+      path_i.path_core.update_path();
+      let path_id = path_i.path_id;
+      //remove the path from the dom
+      $("#" + "path_" + path_id).remove();
+      // remove the element from the nodes_array
+      for (var i = this.paths_array.length - 1; i >= 0; --i) {
+        if (this.paths_array[i].path_id == path_id) {
+          this.paths_array.splice(i, 1);
+        }
+      }
+
+    });
+
+  }
   /**
    * a simple function to create an svg box object
    * @param {number} x - The x position of the top left corenr of the box relative to the window.

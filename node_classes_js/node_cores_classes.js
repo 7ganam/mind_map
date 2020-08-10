@@ -62,9 +62,7 @@ class default_node_core {
       10
     );
 
-    // set up the event handling functionality
-    this.set_body_event_handler(this);
-    this.set_resizer_event_handler(this);
+
 
     //set the connection_points array
     //TODO: take this out the event hanlders and make it a separate function ... update_connection_points();
@@ -75,7 +73,7 @@ class default_node_core {
      * the object format is important as the path classes interact with it based on this format
      * the current format allows for other point to be add in case needed ...
      * different path creation algorithms (implemented in path_core extender classes) may exploit this object
-     * */
+     */
     this.connection_points = {
       top: {
         label: "top",
@@ -98,16 +96,56 @@ class default_node_core {
         y: y + h / 2,
       },
     };
+
+
+    //working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...
+    //working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...
+    //working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...
+
+    this.connection_points_lements = {};
+    for (const property in this.connection_points) {
+      let cpshap = golpal_shape_creator.create_rectangle(
+        0,
+        0,
+        10,
+        10,
+        "blue"
+      );
+      this.connection_points_lements[property] = new element(
+        node_shell.node_id,
+        property,
+        cpshap,
+        this.connection_points[property].x,
+        this.connection_points[property].y,
+        10,
+        10
+      );
+      // this.connection_points_lements[property].draw();
+
+      // console.log(`${property}: ${ this.connection_points[property].x }`);
+
+
+    }
+    // console.log(this.connection_points_lements.top.get_y());
+
+    this.set_connection_elements_event_handler(this);
+
+    //working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...
+    //working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...
+    //working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...working_area...
+
+
   }
+
   /**
    * a function called when the node postion is changed in the dom .. it resets the connection point of node to keep it moving with the node
    * @return {void}.
    */
   update_connection_points() {
-    var x = this.get_x();
-    var y = this.get_y();
-    var w = this.get_width();
-    var h = this.get_height();
+    var x = this.body_element.get_x();
+    var y = this.body_element.get_y();
+    var w = this.body_element.get_width();
+    var h = this.body_element.get_height();
     this.connection_points.top = {
       label: "top",
       x: x + w / 2,
@@ -129,68 +167,40 @@ class default_node_core {
       y: y + h / 2,
     };
   };
-  /**
-   * get the x attribute from the dom body element of the node
-   * @return {number}.
-   */
-  get_x() {
-    var pos_obj = $("#svg_" + this.node_id + "." + "body_element").position();
-    var body_x = pos_obj.left;
-    return body_x;
-    var body_y = pos_obj.top;
+  update_connection_points_elements() {
+
+    this.connection_points_lements.top.set_position(this.connection_points.top.x, this.connection_points.top.y)
+    this.connection_points_lements.right.set_position(this.connection_points.right.x, this.connection_points.right.y)
+    this.connection_points_lements.bottom.set_position(this.connection_points.bottom.x, this.connection_points.bottom.y)
+    this.connection_points_lements.left.set_position(this.connection_points.left.x, this.connection_points.left.y)
+
   };
   /**
-   * get the y attribute from the dom body element of the node
-   * @return {number}.
-   */
-  get_y() {
-    var pos_obj = $("#svg_" + this.node_id + "." + "body_element").position();
-    var body_y = pos_obj.top;
-    return body_y;
-  };
-  /**
-   * get the width attribute from the dom body element of the node
-   * @return {number}.
-   */
-  get_width() {
-    var width = document
-      .querySelectorAll("#svg_" + this.node_id + "." + "body_element")[0]
-      .getAttribute("width");
-    width = Number(width);
-    return width;
-  };
-  /**
-   * get the height attribute from the dom body element of the node
-   * @return {number}.
-   */
-  get_height() {
-    var height = document
-      .querySelectorAll("#svg_" + this.node_id + "." + "body_element")[0]
-      .getAttribute("height");
-    height = Number(height);
-    return height;
-  };
-  /**
-   * draw the node by adding the svg and shape to the dom it uses the {@link element#draw} functions to draw the resizer and body elemnts in the dom
+   * draw all the node elements (body-resizer-connectionelement-etc)  by adding the svg and shape to the dom it uses the {@link element#draw} functions to draw the resizer and body elemnts in the dom
+   * after drawing the node element the event handlers are set ... event handlers cant be set  before the elements are added to the dom
    * @return {void}.
    */
-  draw() {
+  draw_and_set_event_handlers() {
     this.body_element.draw();
     this.resizer_element.draw();
+
+    for (const property in this.connection_points_lements) {
+      this.connection_points_lements[property].draw();
+    }
+
+    this.set_connection_elements_event_handler(this);
     this.set_body_event_handler(this);
     this.set_resizer_event_handler(this);
   };
   /**
    * add events handlers to the body element in the dom
-   * the handlers here add the drag feature of the nodes
-   * this is a function 
+   * the handlers here add the drag feature of the node ++ delete the node with all its elements on right click
    * @param {default_node_core} containing_node_core - a reference(link) to the node_core instance it self (passed so the event handler can easily access node_core)
    * @return {void}.
    */
   set_body_event_handler(containing_node_core) {
     function body_event_handler() {}
     if (typeof body_event_handler.counter == "undefined") {
-
       // here we define the static variables used by the event handlers of this object
       //variables and funcions defined here will be accesible by the handlers any time later.
       // perform  initialization
@@ -213,49 +223,51 @@ class default_node_core {
         if (event.clientY < 0) {
           new_y = 0;
         }
-        //reset node position to the new values
-        document.querySelectorAll(
-            "#svg_" + containing_node_core.node_id + "." + "body_element"
-          )[0].style.top =
-          new_y - body_event_handler.click_in_content_box_y + "px";
-        document.querySelectorAll(
-            "#svg_" + containing_node_core.node_id + "." + "body_element"
-          )[0].style.left =
-          new_x - body_event_handler.click_in_content_box_x + "px";
+
+        this.body_element.set_position(new_x - body_event_handler.click_in_content_box_x, new_y - body_event_handler.click_in_content_box_y)
         //reset node resizer position
-        let width = this.get_width();
-        let height = this.get_height();
-        document.querySelectorAll(
-            "#svg_" + containing_node_core.node_id + "." + "resizer"
-          )[0].style.top =
-          new_y - body_event_handler.click_in_content_box_y + height + "px";
-        document.querySelectorAll(
-            "#svg_" + containing_node_core.node_id + "." + "resizer"
-          )[0].style.left =
-          new_x - body_event_handler.click_in_content_box_x + width + "px";
+        let width = this.body_element.get_width();
+        let height = this.body_element.get_height();
+        this.resizer_element.set_position(new_x - body_event_handler.click_in_content_box_x + width, new_y - body_event_handler.click_in_content_box_y + height)
 
         //reset node connection_points position:
         this.update_connection_points();
-
+        this.update_connection_points_elements()
         //update related paths
         Engine.update_paths(this.node_shell);
       };
     }
 
-    //TODO: somehow the events are attached to the object before even it's added to the dom i don't understand how the jquery did that.
-    //TODO: check the possibility of setting the events based on the html objects directly from js without having to fetch them from the dom
+
     $("#svg_" + containing_node_core.node_id + "." + "body_element").mousedown(
       (event) => {
-        //find the position of the click relative to the upper left corner of the node
-        var pos_obj = $(
-          "#svg_" + containing_node_core.node_id + "." + "body_element"
-        ).position();
-        var body_x = pos_obj.left;
-        var body_y = pos_obj.top;
-        body_event_handler.click_in_content_box_x = event.pageX - body_x;
-        body_event_handler.click_in_content_box_y = event.pageY - body_y;
-        //set the glopal variable to true
-        body_event_handler.clicking = true;
+        switch (event.which) {
+          case 1:
+            //find the position of the click relative to the upper left corner of the node
+            var pos_obj = $(
+              "#svg_" + containing_node_core.node_id + "." + "body_element"
+            ).position();
+            var body_x = pos_obj.left;
+            var body_y = pos_obj.top;
+            body_event_handler.click_in_content_box_x = event.pageX - body_x;
+            body_event_handler.click_in_content_box_y = event.pageY - body_y;
+            //set the glopal variable to true
+            body_event_handler.clicking = true;
+            break;
+          case 2:
+            alert('Middle Mouse button pressed.');
+            break;
+          case 3:
+            // stop right click menu
+            $(document).bind("contextmenu", function (e) {
+              return false;
+            });
+            Engine.delete_node(this.node_shell)
+            break;
+          default:
+            alert('You have a strange Mouse!');
+        }
+
       }
     );
     $(document).mouseup(() => {
@@ -270,7 +282,6 @@ class default_node_core {
       }
     );
   };
-
   /**
    * add events handlers to the resizer element in the dom
    * the handlers here add the drag feature of the resizer to make the body size change
@@ -292,11 +303,8 @@ class default_node_core {
         var new_resizer_x = event.clientX; //position of the resizer is the same as the position of the cursor as it moves
         var new_resizer_y = event.clientY;
 
-        var pos_obj = $(
-          "#svg_" + containing_node_core.node_id + "." + "body_element"
-        ).position(); // position of the body the resizer attached to
-        var body_x = pos_obj.left;
-        var body_y = pos_obj.top;
+        var body_x = this.body_element.get_x();
+        var body_y = this.body_element.get_y();
         //prevent item from getting smaller than a specific size ..
         var min_width = 30;
         var min_height = 30;
@@ -307,40 +315,17 @@ class default_node_core {
           new_resizer_y = body_y + min_height;
         }
 
-        //calculate the new size of node
+        //calculate the new size of the body
         var new_node_width = new_resizer_x - body_x;
         var new_node_height = new_resizer_y - body_y;
 
-        //change the size of the node
-        //resize the svg
-        $("#svg_" + containing_node_core.node_id + "." + "body_element").attr(
-          "height",
-          new_node_height
-        );
-        $("#svg_" + containing_node_core.node_id + "." + "body_element").attr(
-          "width",
-          new_node_width
-        );
-        //resize the svg content
-        $("#shape_" + containing_node_core.node_id + "." + "body_element").attr(
-          "height",
-          new_node_height - 5
-        );
-        $("#shape_" + containing_node_core.node_id + "." + "body_element").attr(
-          "width",
-          new_node_width - 5
-        );
-        //reset node resizer position
-        document.querySelectorAll(
-          "#svg_" + containing_node_core.node_id + "." + "resizer"
-        )[0].style.top = new_resizer_y + "px";
+        //change the size of the body element (both the svg box and the container)
+        this.body_element.set_size(new_node_width, new_node_height)
+        this.resizer_element.set_position(new_resizer_x, new_resizer_y)
 
-        document.querySelectorAll(
-          "#svg_" + containing_node_core.node_id + "." + "resizer"
-        )[0].style.left = new_resizer_x + "px";
         //reset node connection_points position:
         this.update_connection_points();
-
+        this.update_connection_points_elements()
         //update related paths
         Engine.update_paths(this.node_shell);
       };
@@ -365,6 +350,39 @@ class default_node_core {
       }
     );
   };
+
+
+
+  /**
+   * add events handlers to the connection_points_elements in the dom
+   * the handlers here add a son node to the current node and draw it in the dom with the connecting path
+   * @param {default_node_core} containing_node_core - a reference(link) to the node_core instance itself (passed so the event handler can easily access node_core)
+   * @return {void}.
+   */
+  set_connection_elements_event_handler(
+    containing_node_core
+  ) {
+
+    for (const property in this.connection_points_lements) {
+      // this.connection_points_lements[property].draw();
+
+      $(this.connection_points_lements[property].dom_svg_selector).mousedown(
+        (event) => {
+          let xx = this.body_element.get_x();
+          let yy = this.body_element.get_y();
+
+          let nn = Engine.create_node(xx + 200, yy, 100, 100);
+          console.log(nn.set_node_son)
+          Engine.add_son(this.node_shell, nn)
+          nn.node_core.draw_and_set_event_handlers(nn);
+        }
+      );
+    }
+
+
+  }
+
+
 }
 
 // class test_node_core {
@@ -441,10 +459,10 @@ class default_node_core {
 //   }
 
 //   update_connection_points = function () {
-//     var x = this.get_x();
-//     var y = this.get_y();
-//     var w = this.get_width();
-//     var h = this.get_height();
+//     var x = this.body_element.get_x();
+//     var y = this.body_element.get_y();
+//     var w = this.body_element.get_width();
+//     var h = this.body_element.get_height();
 //     this.connection_points.top = {
 //       label: "top",
 //       x: x + w / 2,
@@ -538,8 +556,8 @@ class default_node_core {
 //           )[0].style.left =
 //           new_x - body_event_handler.click_in_content_box_x + "px";
 //         //reset node resizer position
-//         let width = this.get_width();
-//         let height = this.get_height();
+//         let width = this.body_element.get_width();
+//         let height = this.body_element.get_height();
 //         document.querySelectorAll(
 //             "#svg_" + containing_node_core.node_id + "." + "resizer"
 //           )[0].style.top =
