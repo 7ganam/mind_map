@@ -14,12 +14,13 @@ my personal coggle_like mind map app
 - [x] update the UML
 - [x] build engine class
 - [x] add path algotithm to the engine
-- [ ] try documentation library
+- [x] try documentation library
 - [ ] write the node_core abstract class
-- [ ] do the add delete node from connection points function
+- [x] do the add delete node from connection points function
 - [ ] add the text addition function
 - [ ] add the image addition featue
 - [ ] design the base_svg object and how it expands
+- [ ] remove node from sons array of any other node when deleted.
 
 ## todos:
 

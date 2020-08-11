@@ -88,9 +88,7 @@
             <pre class="prettyprint source linenums"><code>/** Class defining svg element with some meta data around it.
  * @category node classes
  */
-class G_SVG
-
-{
+class G_SVG {
     /**
      * constructor .. passed the class name it creates an svg object using js native code and sets the class attributes to the input class name as well as other attributes like position and size
      * @param {string} id 
@@ -109,12 +107,14 @@ class G_SVG
         //set svg style
         this.svg_html_object.style.border = "1px solid black";
         this.svg_html_object.style.position = "fixed";
-        this.svg_html_object.style.top = y + "px"; //position relative to the window
-        this.svg_html_object.style.left = x + "px";
+        // this.svg_html_object.style.top = y + "px"; //position relative to the window
+        // this.svg_html_object.style.left = x + "px";
 
         //set svg attributes
         this.svg_html_object.setAttribute("height", h);
         this.svg_html_object.setAttribute("width", w);
+        this.svg_html_object.setAttribute("x", x);
+        this.svg_html_object.setAttribute("y", y);
         this.svg_html_object.setAttribute("class", svg_class);
 
         //set id
