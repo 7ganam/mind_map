@@ -327,6 +327,84 @@
     <span class="method-parameter is-pulled-right">
         <label>Type:</label>
         
+<span class="param-type">boolean</span>
+
+
+    </span>
+
+<h4 class="name" id="is_changin_viewport_allowed">
+    <a class="href-link" href="#is_changin_viewport_allowed">#</a>
+    
+    <span class="code-name">
+        is_changin_viewport_allowed
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>a variable used by the svg_base event handlers to stop changin the view port
+..... it's set to true by node event handlers to stop the change of the view port while the node is changing position.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
+            <span>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line26">line 26</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
 <span class="param-type">Array.&lt;<a href="node_shell.html">node_shell</a>></span>
 
 
@@ -632,7 +710,7 @@
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line71">line 71</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line74">line 74</a>
             </span>
         </p>
     
@@ -668,6 +746,253 @@
         <label>Type: </label>
         
 <span class="param-type">void</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="create_base_svg_and_attach_its_event_handlers">
+        <a class="href-link" href="#create_base_svg_and_attach_its_event_handlers">#</a>
+        
+        <span class="code-name">
+            
+                create_base_svg_and_attach_its_event_handlers<span class="signature">(x, y, w, h)</span><span class="type-signature"> &rarr; {object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>creating the base_svg ... the global svg container that all nodes are drawn into...
+attaching event handlers that allow for changing the view port when clicking and draggin on free area</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>x</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The x position of the top left corenr of the box relative to the window.</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>y</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The y position of the top left corenr of the box relative to the window.</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>w</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The width in pixles</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>h</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The height in pixles</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
+            <span>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line158">line 158</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">object</span>
 
 
     </div>
@@ -879,7 +1204,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line35">line 35</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line39">line 39</a>
             </span>
         </p>
     
@@ -1081,7 +1406,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line48">line 48</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line52">line 52</a>
             </span>
         </p>
     
@@ -1203,7 +1528,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line79">line 79</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line82">line 82</a>
             </span>
         </p>
     
@@ -1258,252 +1583,6 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
 
 
     
-    <h4 class="name" id="create_svg">
-        <a class="href-link" href="#create_svg">#</a>
-        
-        <span class="code-name">
-            
-                create_svg<span class="signature">(x, y, w, h)</span><span class="type-signature"> &rarr; {object}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>a simple function to create an svg box object</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>x</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The x position of the top left corenr of the box relative to the window.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>y</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The y position of the top left corenr of the box relative to the window.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>w</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The width in pixles</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>h</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">number</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The height in pixles</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
-            <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line151">line 151</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">object</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
     <h4 class="name" id="delete_node">
         <a class="href-link" href="#delete_node">#</a>
         
@@ -1518,7 +1597,8 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>delete node from the nodes_array  <a href="Engine.html#nodes_array">Engine#nodes_array</a> and all related elements from the dom .. delete all related paths from the dom and the paths_array <a href="Engine.html#paths_array">Engine#paths_array</a></p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>delete node from the nodes_array  <a href="Engine.html#nodes_array">Engine#nodes_array</a> and all related elements from the dom ..
+delete all related paths from the dom and the paths_array <a href="Engine.html#paths_array">Engine#paths_array</a></p>
     </div>
     
 
@@ -1564,12 +1644,19 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
     
 
     
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>TODO: delete the node from the sons array of ony parent nod</li>
+        </ul>
+    </dd>
+    
 
     
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line114">line 114</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line119">line 119</a>
             </span>
         </p>
     
@@ -1629,7 +1716,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
         
         <span class="code-name">
             
-                draw_nodes<span class="signature">(parent_node, son_node)</span><span class="type-signature"> &rarr; {void}</span>
+                draw_nodes<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span>
             
         </span>
     </h4>
@@ -1649,86 +1736,6 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
 
 
 
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>parent_node</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="node_shell.html">node_shell</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><ul>
-<li></li>
-</ul></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>son_node</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type"><a href="node_shell.html">node_shell</a></span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><ul>
-<li></li>
-</ul></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
 
 
 
@@ -1769,7 +1776,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line60">line 60</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line63">line 63</a>
             </span>
         </p>
     
@@ -1838,7 +1845,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>whenever a node changes its position it should call this function to loop over the nodes_array  <a href="Engine.html#nodes_array">Engine#nodes_array</a> and update only the paths that are connected to this node... this function is called by node_cores event handlers that handle the nodes positioning and resizing</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>whenever a node changes its position it should call this function to loop over the paths_array  <a href="Engine.html#paths_array">Engine#paths_array</a> and update only the paths that are connected to this node... this function is called by node_cores event handlers that handle the nodes positioning and resizing</p>
     </div>
     
 
@@ -1889,7 +1896,7 @@ the node is not drawn automatically in the dom .. a separate draw() method shoul
         <p class="tag-source">
             <a href="Engine_class_js_Engine_class.js.html" class="button">View Source</a>
             <span>
-                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line100">line 100</a>
+                <a href="Engine_class_js_Engine_class.js.html">Engine_class_js/Engine_class.js</a>, <a href="Engine_class_js_Engine_class.js.html#line103">line 103</a>
             </span>
         </p>
     

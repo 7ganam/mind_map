@@ -396,7 +396,7 @@
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>an element containing both the svg and the shape objects of the node body .. node body is the basic container that contains text,images,etc</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>an element containing both the svg and the shape objects of the node body_dom_svg .. node body_dom_svg is the basic container that contains text,images,etc</p>
 </div>
 
 
@@ -438,7 +438,7 @@
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line33">line 33</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line27">line 27</a>
             </span>
         </p>
     
@@ -460,11 +460,11 @@
 
     </span>
 
-<h4 class="name" id="connection_points">
-    <a class="href-link" href="#connection_points">#</a>
+<h4 class="name" id="connection_points_lements">
+    <a class="href-link" href="#connection_points_lements">#</a>
     
     <span class="code-name">
-        connection_points
+        connection_points_lements
     </span>
     
 </h4>
@@ -473,10 +473,9 @@
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>object containing all the points that a path can connect to in this node type
-the object format is important as the path classes interact with it based on this format
-the current format allows for other point to be add in case needed ...
-different path creation algorithms (implemented in path_core extender classes) may exploit this object</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>object containing a set of element object <a href="element.html">element</a> that are a visualization of the connection points on the dom .. they have event handler function
+check the event handler setter function <a href="default_node_core.html#set_connection_elements_event_handler">default_node_core#set_connection_elements_event_handler</a>
+currently the implimintation is core specific ... meaning it may change from core to core</p>
 </div>
 
 
@@ -518,7 +517,7 @@ different path creation algorithms (implemented in path_core extender classes) m
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line77">line 77</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line67">line 67</a>
             </span>
         </p>
     
@@ -749,7 +748,7 @@ different path creation algorithms (implemented in path_core extender classes) m
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line55">line 55</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line34">line 34</a>
             </span>
         </p>
     
@@ -788,7 +787,7 @@ different path creation algorithms (implemented in path_core extender classes) m
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>draw all the node elements (body-resizer-connectionelement-etc)  by adding the svg and shape to the dom it uses the <a href="element.html#draw">element#draw</a> functions to draw the resizer and body elemnts in the dom
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>draw all the node elements (body_dom_svg-resizer-connectionelement-etc)  by adding the svg and shape to the dom it uses the <a href="element.html#draw">element#draw</a> functions to draw the resizer and body_dom_svg elemnts in the dom
 after drawing the node element the event handlers are set ... event handlers cant be set  before the elements are added to the dom</p>
     </div>
     
@@ -840,7 +839,7 @@ after drawing the node element the event handlers are set ... event handlers can
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line183">line 183</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line145">line 145</a>
             </span>
         </p>
     
@@ -911,7 +910,7 @@ after drawing the node element the event handlers are set ... event handlers can
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>add events handlers to the body element in the dom
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>add events handlers to the body_dom_svg element in the dom
 the handlers here add the drag feature of the node ++ delete the node with all its elements on right click</p>
     </div>
     
@@ -1014,7 +1013,7 @@ the handlers here add the drag feature of the node ++ delete the node with all i
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line201">line 201</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line163">line 163</a>
             </span>
         </p>
     
@@ -1188,7 +1187,7 @@ the handlers here add a son node to the current node and draw it in the dom with
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line362">line 362</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line343">line 343</a>
             </span>
         </p>
     
@@ -1260,7 +1259,7 @@ the handlers here add a son node to the current node and draw it in the dom with
     
     <div class="description">
         <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>add events handlers to the resizer element in the dom
-the handlers here add the drag feature of the resizer to make the body size change
+the handlers here add the drag feature of the resizer to make the body_dom_svg size change
 this is a function</p>
     </div>
     
@@ -1363,7 +1362,7 @@ this is a function</p>
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line292">line 292</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line263">line 263</a>
             </span>
         </p>
     
@@ -1485,7 +1484,7 @@ this is a function</p>
         <p class="tag-source">
             <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
             <span>
-                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line144">line 144</a>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line93">line 93</a>
             </span>
         </p>
     
@@ -1532,6 +1531,103 @@ this is a function</p>
                 
         </div>
     </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="update_connection_points_elements">
+        <a class="href-link" href="#update_connection_points_elements">#</a>
+        
+        <span class="code-name">
+            
+                update_connection_points_elements<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>a function called when the node postion is changed in the dom .. it updates the connection points position in the dom</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="node_classes_js_node_cores_classes.js.html" class="button">View Source</a>
+            <span>
+                <a href="node_classes_js_node_cores_classes.js.html">node_classes_js/node_cores_classes.js</a>, <a href="node_classes_js_node_cores_classes.js.html#line122">line 122</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

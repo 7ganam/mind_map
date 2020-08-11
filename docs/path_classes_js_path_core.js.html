@@ -105,8 +105,8 @@ class default_path_core {
 
     //find the the connection points from the two nodes (from_node to_node) and choose a point from each node 
     let path_end_points = this.find_connection_points_pair(
-      path_shell.from_node_shell.node_core.connection_points,
-      path_shell.to_node_shell.node_core.connection_points
+      path_shell.from_node_shell.connection_points,
+      path_shell.to_node_shell.connection_points
     );
 
     //create html objec of a path connecting both the terminal points
@@ -239,8 +239,8 @@ class default_path_core {
     let from_id = this.path_shell.from_node_shell.node_id;
     let to_id = this.path_shell.to_node_shell.node_id;
     let path_end_points = this.find_connection_points_pair(
-      this.path_shell.from_node_shell.node_core.connection_points,
-      this.path_shell.to_node_shell.node_core.connection_points
+      this.path_shell.from_node_shell.connection_points,
+      this.path_shell.to_node_shell.connection_points
     );
 
     start_point = path_end_points.from_point;

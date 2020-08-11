@@ -2,202 +2,29 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="drag_svg.css">
 </head>
 <!-- # TODO: get rid of the need to make margin =0 -->
+
 <body id="body" style="margin: 0;">
-
-    <div>
-
+    <div class="bird-cage">
+        <svg viewBox="50 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" fill-rule="evenodd">
+                <path d="M45.212 65.097c2.41 3.751 3.846 4.016 7.306 1.375.383-.292 1.081-.226 1.567-.057 2.749.96 5.162.316 7.197-2.074 1.455-1.708 2.312-3.865 2.89-6.17 1.6-6.38 1.514-12.826.44-19.291-.113-.68-.476-1.3-.724-1.947-.369.57-.854 1.081-1.087 1.722-1.89 5.203-4.344 9.953-7.764 13.925-3.968 4.609-8.464 8.02-14.152 8.627-.75.08-.872.698-.709 1.4.305 1.308 1.03 2.244 2.15 2.456.91.171 1.86.034 2.886.034zm-4.008 34.687c-.461-.231-.91-.617-1.386-.67-4.197-.47-8.272-1.623-12.243-3.25C17.177 91.605 8.305 84.597 1.123 74.61c-.257-.358-.476-.753-.871-1.382.734.092 1.25.138 1.76.224 5.184.871 10.368 1.269 15.55.02 9.27-2.236 15.192-9.022 18.351-19.452 2.07-6.833 2.736-13.943 2.911-21.181.09-3.692.343-7.482 1.144-11.026 2.043-9.041 6.818-15.51 14.098-19.092 9.68-4.765 18.53-2.839 26.457 5.219a22.692 22.692 0 0 1 5.23 8.401c.834 2.36 2.216 3.795 4.153 4.788 3.041 1.56 6.01 3.323 9.008 5.004.208.117.404.265.763.503-.363.375-.624.71-.935.955-2.908 2.292-5.81 4.6-8.75 6.833-.98.745-1.397 1.654-1.458 3.056a118.393 118.393 0 0 1-2.229 18.437c-1.86 9.185-4.85 17.806-9.587 25.446-2.843 4.586-6.386 8.298-10.244 11.675-2.095 1.832-4.366 1.836-6.68 2.117-6.172.75-12.23 2.151-18.139 4.427-.091.035-.165.133-.247.202h-.204z" fill="#231F20" />
+                <path d="M45.211 65.098c-1.026 0-1.976.136-2.885-.035-1.12-.212-1.845-1.148-2.15-2.456-.163-.702-.042-1.32.709-1.4 5.689-.607 10.185-4.018 14.152-8.627 3.42-3.972 5.874-8.722 7.763-13.925.233-.641.72-1.151 1.088-1.722.247.647.612 1.267.724 1.947 1.074 6.465 1.16 12.911-.44 19.29-.578 2.306-1.435 4.463-2.89 6.171-2.035 2.39-4.448 3.034-7.197 2.074-.486-.169-1.184-.235-1.567.057-3.46 2.64-4.895 2.376-7.307-1.374M76.666 16c1.792-.025 3.213 1.83 3.255 4.246.04 2.42-1.43 4.442-3.224 4.432-1.725-.01-3.156-1.903-3.189-4.218-.035-2.497 1.337-4.435 3.158-4.46" fill="#FEFEFE" />
+            </g>
+        </svg>
     </div>
 
- 
-    
-    <script>
-
-
-        var create_svg=function(x,y,w,h)
-        {
-            var NS="http://www.w3.org/2000/svg";
-            var svg=document.createElementNS(NS,"svg");
-            //set svg style
-                svg.style.border= "1px solid black";
-                svg.style.position= "fixed";
-                svg.style.top= x + "px";  //position relative to the window
-                svg.style.left= y + "px";
-
-            //set svg attributes
-                svg.setAttribute("height", h);
-                svg.setAttribute("width", w);
-
-            return svg;
-        }
-        var create_rect=function(x,y,w,h,fill)
-        {
-            var NS="http://www.w3.org/2000/svg";
-            var SVGObj= document.createElementNS(NS,"rect");
-            SVGObj.width.baseVal.value=w;
-            SVGObj.height.baseVal.value=h;
-            SVGObj.setAttribute("height",h);
-            SVGObj.setAttribute("x", x);
-            SVGObj.setAttribute("y", y);
-            SVGObj.setAttribute("rx", 20);
-            SVGObj.setAttribute("ry", 20);
-            SVGObj.style="fill:red;stroke:black;stroke-width:5;opacity:0.5"
-            return SVGObj;
-        }
-        
-        //node_content_box class
-        function node_content_box(node_id,x,y,w,h) {
-            this.node_id=node_id;
-            //create svg of the content box
-                this.content_box_svg=create_svg(x,y,w,h);
-            //add the id to the svg box
-                this.content_box_svg.setAttribute("id", "node_content_box_"+node_id);
-            //add the svg box to the dom
-                document.body.appendChild(this.content_box_svg);
-            //create rectangle 
-                this.r= create_rect(3,3,80,80,"blue");
-            //add id to the rectangle
-                this.r.setAttribute("id", "node_content_box_rect_"+node_id);
-            //add the rectangle to the dom
-                this.content_box_svg.appendChild( this.r);
-
-            //add mouse events lisnters
-            //TODO: find a way to make this modular in some way... this sections makes the class lengthy .. would prefer if there were a way to separate it in other file
-                this.clicking = false; // var to know when the box is clicked and when mouse click is up.
-                this.click_in_content_box_x=0; // variables to make drag node relative to the point clicked in the node not the upper left corner
-                this.click_in_content_box_y=0;
-                $('#node_content_box_'+this.node_id).mousedown((event)=>{
-                    //find the position of the click relative to the upper left corner of the node
-                    var pos_obj = $('#node_content_box_'+this.node_id).position();
-                    content_box_x =pos_obj.left;
-                    content_box_y =pos_obj.top;
-                    this.click_in_content_box_x = event.pageX - content_box_x;
-                    this.click_in_content_box_y = event.pageY - content_box_y;
-                    //set the glopal variable to true
-                    this.clicking = true;
-                });
-                $(document).mouseup(()=>{
-                    this.clicking = false;
-                    window.onmousemove = null;
-                })
-                $('#node_content_box_'+this.node_id).mousemove(()=>{
-                    if(this.clicking == false) return;
-                    // Mouse click + moving logic here
-                    window.onmousemove = this.handle_item_drag;
-                });
-
-                this.handle_item_drag =(event)=>{
-                    event = event || window.event;
-                    var new_x = event.clientX;
-                    var new_y= event.clientY;
-                    //prevent item from getting out of top and left edges of window .. 
-                    //   TODO: make the window resize instead when this happens
-                    if(event.clientX < 0)
-                    {    new_x = 0;  }
-                    if(event.clientY < 0)
-                    {    new_y = 0;  }
-
-                    //reset node position to the new values
-                    document.getElementById('node_content_box_'+this.node_id).style.top= (new_y - this.click_in_content_box_y) + "px";
-                    document.getElementById('node_content_box_'+this.node_id).style.left=(new_x - this.click_in_content_box_x) + "px";
-
-                    //reset node resizer position 
-                    var width = document.getElementById('node_content_box_'+this.node_id).getAttribute("width");
-                    var height = document.getElementById('node_content_box_'+this.node_id).getAttribute("height");
-                    document.getElementById('resiezer_'+this.node_id).style.top= (new_y - this.click_in_content_box_y + Number(height)) + "px";
-                    document.getElementById('resiezer_'+this.node_id).style.left=(new_x - this.click_in_content_box_x + Number(width )) + "px";
-                    
-                } ;
-
-        }
-
-        //resizer class
-        function resizer(node_id,x,y,w,h) {
-            this.node_id = node_id;
-            //create svg of the resizer
-                this.resizer_svg1=create_svg(x,y,w,h);
-            //add the id to the svg 
-            this.resizer_svg1.setAttribute("id", "resiezer_"+node_id);
-            //add the svg box to the dom
-                document.body.appendChild(this.resizer_svg1);
-            //create rectangle 
-                this.r2= create_rect(0,0,10,10,"red");
-            //add id to the rectangle
-                this.r2.setAttribute("id", "resizer_rect_"+node_id);
-            //add the rectangle to the dom
-                this.resizer_svg1.appendChild(this.r2);
-
-            //add mouse event handlers to the resizer
-            this.clicking2 = false; // var to know when the resizer is clicked and when mouse click is up.
-            $('#resiezer_'+this.node_id).mousedown((event)=>{
-                //set the glopal variable to true
-                this.clicking2 = true;
-            });
-            $(document).mouseup(()=>{
-                this.clicking2 = false;
-                window.onmousemove = null;
-            })
-            $('#resiezer_'+this.node_id).mousemove(()=>{
-                if(this.clicking2 == false) return;
-
-                // Mouse click + moving logic here
-                window.onmousemove = this.handle_item_resize;
-            });
-
-            this.handle_item_resize=(event) =>{
-
-                    event = event || window.event;
-                    var new_resizer_x = event.clientX; //position of the resizer is the same as the position of the cursor as it moves
-                    var new_resizer_y= event.clientY;
-                
-                    var pos_obj = $("#node_content_box_"+this.node_id).position(); // position of the node the resizer attached to
-                    var node_x =pos_obj.left;
-                    var node_y =pos_obj.top;
-
-                //prevent item from getting smaller than a specific size .. 
-                    var min_width=30;
-                    var min_height=30;
-                    if(event.clientX - node_x < min_width)
-                    {    new_resizer_x = node_x+min_width;  }
-                    if(event.clientY -node_y < min_height)
-                    {    new_resizer_y = node_y+min_height;  }
-                
-                //calculate the new size of node    
-                    var new_node_width = new_resizer_x - node_x;
-                    var new_node_height = new_resizer_y - node_y;
-
-                //change the size of the node 
-                    //resize the svg
-                    $('#node_content_box_'+this.node_id).attr('height', new_node_height);
-                    $('#node_content_box_'+this.node_id).attr('width', new_node_width);
-                    //resize the svg content
-                    $('#node_content_box_rect_'+this.node_id).attr('height', new_node_height-5);
-                    $('#node_content_box_rect_'+this.node_id).attr('width', new_node_width-5);
-                //reset node resizer position 
-                    document.getElementById('resiezer_'+this.node_id).style.top= (new_resizer_y ) + "px";
-                    document.getElementById('resiezer_'+this.node_id).style.left=(new_resizer_x ) + "px";
-
-            };
-
-        }
-        
-        let content_box_1 = new node_content_box(1,200,100,85,85); //example instance of clase node_content_box .. when you create class content box  automatically appear in the dom and event handler is add to it
-        let resizer_1 = new resizer(1,200+85,100+85,10,10);
-
-        let content_box_2 = new node_content_box(2,200,100,85,85); //example instance of clase node_content_box .. when you create class content box  automatically appear in the dom and event handler is add to it
-        let resizer_2 = new resizer(2,200+85,100+85,10,10);
-
-
-    </script>
-    
-    <!-- <script src="darg_handling.js"> </script> -->
-    <!-- <script src="resize_handling.js"> </script> -->
-
+    .bird-cage {
+    height 100px;
+    width: 100px;
+    border: 1px solid green;
+    }
 </body>
+
 </html>

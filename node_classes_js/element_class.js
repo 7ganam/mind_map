@@ -37,8 +37,8 @@ class element {
      * it depends that both {@link element#G_SVG} and {@link element#shape} object have a draw() metho of their own and just exploits them.
      * @return {void}.
      */
-    draw() {
-        this.G_SVG.draw(document.body);
+    draw(parent_dom_element) {
+        this.G_SVG.draw(parent_dom_element);
         this.shape.draw(this.G_SVG.svg_html_object);
     }
     /**
@@ -46,18 +46,22 @@ class element {
      * @return {number}.
      */
     get_x() {
-        var pos_obj = $("#svg_" + this.id + "." + "body_element").position();
-        var body_x = pos_obj.left;
-        return body_x;
+        var x = document
+            .querySelectorAll(this.dom_svg_selector)[0]
+            .getAttribute("x");
+        x = Number(x);
+        return x;
     }
     /**
      * get the y attribute from the dom  element 
      * @return {number}.
      */
     get_y() {
-        var pos_obj = $("#svg_" + this.id + "." + "body_element").position();
-        var body_y = pos_obj.top;
-        return body_y;
+        var y = document
+            .querySelectorAll(this.dom_svg_selector)[0]
+            .getAttribute("y");
+        y = Number(y);
+        return y;
     };
     /**
      * get the width attribute from the dom element
@@ -65,7 +69,7 @@ class element {
      */
     get_width() {
         var width = document
-            .querySelectorAll("#svg_" + this.id + "." + "body_element")[0]
+            .querySelectorAll(this.dom_svg_selector)[0]
             .getAttribute("width");
         width = Number(width);
         return width;
@@ -76,7 +80,7 @@ class element {
      */
     get_height() {
         var height = document
-            .querySelectorAll("#svg_" + this.id + "." + "body_element")[0]
+            .querySelectorAll(this.dom_svg_selector)[0]
             .getAttribute("height");
         height = Number(height);
         return height;
@@ -89,14 +93,14 @@ class element {
      * @return {void}.
      */
     set_position(x, y) {
-        document.querySelectorAll(
-                this.dom_svg_selector
-            )[0].style.top =
-            y + "px";
-        document.querySelectorAll(
-                this.dom_svg_selector
-            )[0].style.left =
-            x + "px";
+        $(this.dom_svg_selector).attr(
+            "x",
+            x
+        );
+        $(this.dom_svg_selector).attr(
+            "y",
+            y
+        );
     }
     /**
      * set the height attribute of boath the SVG box and the shape in the dom 
