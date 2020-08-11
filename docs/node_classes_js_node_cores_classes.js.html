@@ -203,6 +203,9 @@ class default_node_core {
       y: y + h / 2,
     };
   }
+  /**
+   * a function called when the node postion is changed in the dom .. it updates the connection points position in the dom 
+   */
   update_connection_points_elements() {
     this.connection_points_lements.top.set_position(
       this.node_shell.connection_points.top.x,
@@ -270,7 +273,7 @@ class default_node_core {
           //set the glopal variable to true
           isPointerDown = true;
           //tell the engine base svg not to activate its own on_Mouse_move event handler
-          is_changin_viewport_allowed = true;
+          Engine.is_changin_viewport_allowed = false;
           break;
         case 3:
           // stop right click menu
@@ -288,7 +291,7 @@ class default_node_core {
     function on_mouse_up(event) {
       isPointerDown = false;
       //tell the engine base svg its free to use its own on_Mouse_move event handler
-      is_changin_viewport_allowed = false;
+      Engine.is_changin_viewport_allowed = true;
       // Engine.base_svg.onmousemove = null;
       Engine.base_svg.removeEventListener('mousemove', move_node_with_clicked_pointer);
 
@@ -345,63 +348,78 @@ class default_node_core {
    * @return {void}.
    */
   set_resizer_event_handler(containing_node_core) {
-    // here we define the static variables used by the event handlers of this object
-    //variables and funcions defined here will be accesible by the handlers any time later.
-    function resizer_event_handler() { }
-    if (typeof resizer_event_handler.counter == "undefined") {
-      resizer_event_handler.counter = 0;
-      resizer_event_handler.clicking2 = false; // var to know when the resizer is clicked and when mouse click is up.
-      resizer_event_handler.handle_item_resize = (event) => {
-        event = event || window.event;
-        var new_resizer_x = event.clientX; //position of the resizer is the same as the position of the cursor as it moves
-        var new_resizer_y = event.clientY;
 
-        var body_x = this.body_element.get_x();
-        var body_y = this.body_element.get_y();
-        //prevent item from getting smaller than a specific size ..
-        var min_width = 30;
-        var min_height = 30;
-        if (event.clientX - body_x &lt; min_width) {
-          new_resizer_x = body_x + min_width;
-        }
-        if (event.clientY - body_y &lt; min_height) {
-          new_resizer_y = body_y + min_height;
-        }
+    let isPointerDown2 = false; // var to know when the resizer is clicked and when mouse click is up.
+    let resizer_dom_svg = document.querySelector(this.resizer_element.dom_svg_selector)
+    let this_node_core = this; // replace the "this" keyword with "this_node_core" to make the object accisble inside the nested functions
 
-        //calculate the new size of the body_dom_svg
-        var new_node_width = new_resizer_x - body_x;
-        var new_node_height = new_resizer_y - body_y;
+    resizer_dom_svg.addEventListener('mousedown', on_moused_down); // Pressing the mouse
+    document.addEventListener('mouseup', on_mouse_up); // Pressing the mouse
+    resizer_dom_svg.addEventListener('mousemove', on_mouse_move); // Pressing the mouse
 
-        //change the size of the body_dom_svg element (both the svg box and the container)
-        this.body_element.set_size(new_node_width, new_node_height);
-        this.resizer_element.set_position(new_resizer_x, new_resizer_y);
 
-        //reset node node_shell.connection_points position:
-        this.update_connection_points();
-        this.update_connection_points_elements();
-        //update related paths
-        Engine.update_paths(this.node_shell);
-      };
+    function resize_body_with_pointer_position(event) {
+      event = event || window.event;
+      var click_x = event.clientX + Engine.base_svg.current_viewBox.x; //position of click
+      var click_y = event.clientY + Engine.base_svg.current_viewBox.y;
+      var new_resizer_x = click_x  //position of the resizer is the same as the position of the cursor as it moves
+      var new_resizer_y = click_y
+
+      var body_x = this_node_core.body_element.get_x();
+      var body_y = this_node_core.body_element.get_y();
+      //prevent item from getting smaller than a specific size ..
+      var min_width = 30;
+      var min_height = 30;
+      if (click_x - body_x &lt; min_width) {
+        new_resizer_x = body_x + min_width;
+      }
+      if (click_y - body_y &lt; min_height) {
+        new_resizer_y = body_y + min_height;
+      }
+
+      //calculate the new size of the body_dom_svg
+      var new_node_width = new_resizer_x - body_x;
+      var new_node_height = new_resizer_y - body_y;
+
+      //change the size of the body_dom_svg element (both the svg box and the container)
+      this_node_core.body_element.set_size(new_node_width, new_node_height);
+      this_node_core.resizer_element.set_position(new_resizer_x, new_resizer_y);
+
+      //reset node node_shell.connection_points position:
+      this_node_core.update_connection_points();
+      this_node_core.update_connection_points_elements();
+      //update related paths
+      Engine.update_paths(this_node_core.node_shell);
+    };
+
+    function on_moused_down(event) {
+      //set the glopal variable to true
+      isPointerDown2 = true;
+      //tell the engine base svg not to activate its own on_Mouse_move event handler
+      Engine.is_changin_viewport_allowed = false;
     }
 
-    $("#svg_" + containing_node_core.node_id + "." + "resizer").mousedown(
-      (event) => {
-        //set the glopal variable to true
-        resizer_event_handler.clicking2 = true;
-      }
-    );
-    $(document).mouseup(() => {
-      resizer_event_handler.clicking2 = false;
+    function on_mouse_up() {
+      isPointerDown2 = false;
 
-      window.onmousemove = null;
-    });
-    $("#svg_" + containing_node_core.node_id + "." + "resizer").mousemove(
-      () => {
-        if (resizer_event_handler.clicking2 == false) return;
-        // Mouse click + moving logic here
-        window.onmousemove = resizer_event_handler.handle_item_resize;
-      }
-    );
+      // window.onmousemove = null;
+      Engine.base_svg.removeEventListener('mousemove', resize_body_with_pointer_position);
+
+      //tell the engine base svg its free to use its own on_Mouse_move event handler
+      Engine.is_changin_viewport_allowed = true;
+    }
+
+
+    function on_mouse_move() {
+      if (isPointerDown2 == false) return;
+      // Mouse click + moving logic here
+      // window.onmousemove = handle_item_resize;
+      Engine.base_svg.addEventListener('mousemove', resize_body_with_pointer_position);
+
+    }
+
+
+
   }
   /**
    * add events handlers to the connection_points_elements in the dom
@@ -430,319 +448,7 @@ class default_node_core {
     }
   }
 }
-
-// class test_node_core {
-//   constructor(node_shell, x, y, w, h) {
-//     //create the body_dom_svg element
-//     this.node_shell = node_shell;
-//     this.node_id = node_shell.node_id;
-//     //create a specific shape for this core .. this may change for each core type
-//     var body_html_shape = golpal_shape_creator.create_rectangle(
-//       20,
-//       20,
-//       w - 4,
-//       h - 4,
-//       "blue"
-//     );
-//     this.body_element = new element(
-//       node_shell.node_id,
-//       "body_element",
-//       body_html_shape,
-//       x,
-//       y,
-//       w,
-//       h
-//     );
-//     // this.body_element.draw();
-
-//     //create the resizer element
-//     var resizer_html_shape = golpal_shape_creator.create_rectangle(
-//       0,
-//       0,
-//       10,
-//       10,
-//       "blue"
-//     );
-//     this.resizer_element = new element(
-//       node_shell.node_id,
-//       "resizer",
-//       resizer_html_shape,
-//       x + w,
-//       y + h,
-//       10,
-//       10
-//     );
-//     // this.resizer_element.draw();
-
-//     // set up the event handling functionality
-//     this.body_event_handler(this);
-//     this.set_resizer_event_handler(this);
-
-//     //set the node_shell.connection_points array
-//     //TODO: take this out the event hanlders and make it a separate function ... update_connection_points();
-//     this.node_shell.connection_points = {
-//       top: {
-//         label: "top",
-//         x: x + w / 2,
-//         y: y,
-//       },
-//       right: {
-//         label: "right",
-//         x: x + w,
-//         y: y + h / 2,
-//       },
-//       bottom: {
-//         label: "bottom",
-//         x: x + w / 2,
-//         y: y + h,
-//       },
-//       left: {
-//         label: "left",
-//         x: x,
-//         y: y + h / 2,
-//       },
-//     };
-//   }
-
-//   update_connection_points = function () {
-//     var x = this.body_element.get_x();
-//     var y = this.body_element.get_y();
-//     var w = this.body_element.get_width();
-//     var h = this.body_element.get_height();
-//     this.node_shell.connection_points.top = {
-//       label: "top",
-//       x: x + w / 2,
-//       y: y,
-//     };
-//     this.node_shell.connection_points.right = {
-//       label: "right",
-//       x: x + w,
-//       y: y + h / 2,
-//     };
-//     this.node_shell.connection_points.bottom = {
-//       label: "bottom",
-//       x: x + w / 2,
-//       y: y + h,
-//     };
-//     this.node_shell.connection_points.left = {
-//       label: "left",
-//       x: x,
-//       y: y + h / 2,
-//     };
-//   };
-//   get_x = function () {
-//     var pos_obj = $("#svg_" + this.node_id + "." + "body_element").position();
-//     var body_x = pos_obj.left;
-//     return body_x;
-//     var body_y = pos_obj.top;
-//   };
-//   get_y = function () {
-//     var pos_obj = $("#svg_" + this.node_id + "." + "body_element").position();
-//     var body_y = pos_obj.top;
-//     return body_y;
-//   };
-//   get_width = function () {
-//     var width = document
-//       .querySelectorAll("#svg_" + this.node_id + "." + "body_element")[0]
-//       .getAttribute("width");
-//     width = Number(width);
-//     return width;
-//   };
-//   get_height = function () {
-//     var height = document
-//       .querySelectorAll("#svg_" + this.node_id + "." + "body_element")[0]
-//       .getAttribute("height");
-//     height = Number(height);
-//     return height;
-//   };
-//   draw = function () {
-//     this.body_element.draw();
-//     this.resizer_element.draw();
-//     this.body_event_handler(this);
-//     this.set_resizer_event_handler(this);
-//   };
-
-//   /**
-//    * add events handlers to the body_dom_svg element in the dom
-//    * the handlers here add the drag feature of the nodes
-//    * @param {default_node_core} containing_node_core - a reference(link) to the node_core instance it self (passed so the event handler can easily access node_core)
-//    * @return {void}.
-//    */
-//   body_event_handler(containing_node_core) {
-//     // here we define the static variables used by the event handlers of this object
-//     //variables and funcions defined here will be accesible by the handlers any time later.
-//     if (typeof counter == "undefined") {
-//       // perform  initialization
-//       counter = 0;
-//       isPointerDown = false; // var to know when the box is clicked and when mouse click is up.
-//       click_relative_to_body_x = 0; // variables to make drag node relative to the point clicked in the node not the upper left corner
-//       click_relative_to_body_y = 0;
-
-//       //this function is called by the the event attachment below
-//       //the function used when isPointerDown and moving
-//       handle_item_drag = (event) => {
-//         event = event || window.event;
-//         var new_x = event.clientX; //position of click
-//         var new_y = event.clientY;
-//         //prevent item from getting out of top and left edges of window ..
-//         //   TODO: make the window resize instead when this happens
-//         if (event.clientX &lt; 0) {
-//           new_x = 0;
-//         }
-//         if (event.clientY &lt; 0) {
-//           new_y = 0;
-//         }
-//         //reset node position to the new values
-//         document.querySelectorAll(
-//             "#svg_" + containing_node_core.node_id + "." + "body_element"
-//           )[0].style.top =
-//           new_y - click_relative_to_body_y + "px";
-//         document.querySelectorAll(
-//             "#svg_" + containing_node_core.node_id + "." + "body_element"
-//           )[0].style.left =
-//           new_x - click_relative_to_body_x + "px";
-//         //reset node resizer position
-//         let width = this.body_element.get_width();
-//         let height = this.body_element.get_height();
-//         document.querySelectorAll(
-//             "#svg_" + containing_node_core.node_id + "." + "resizer"
-//           )[0].style.top =
-//           new_y - click_relative_to_body_y + height + "px";
-//         document.querySelectorAll(
-//             "#svg_" + containing_node_core.node_id + "." + "resizer"
-//           )[0].style.left =
-//           new_x - click_relative_to_body_x + width + "px";
-
-//         //reset node node_shell.connection_points position:
-//         this.update_connection_points();
-
-//         //update related paths
-//         Engine.update_paths(this.node_shell);
-//       };
-//     }
-
-//     //TODO: somehow the events are attached to the object before even it's added to the dom i don't understand how the jquery did that.
-//     //TODO: check the possibility of setting the events based on the html objects directly from js without having to fetch them from the dom
-//     $("#svg_" + containing_node_core.node_id + "." + "body_element").mousedown(
-//       (event) => {
-//         //find the position of the click relative to the upper left corner of the node
-//         var pos_obj = $(
-//           "#svg_" + containing_node_core.node_id + "." + "body_element"
-//         ).position();
-//         var body_x = pos_obj.left;
-//         var body_y = pos_obj.top;
-//         click_relative_to_body_x = event.pageX - body_x;
-//         click_relative_to_body_y = event.pageY - body_y;
-//         //set the glopal variable to true
-//         isPointerDown = true;
-//       }
-//     );
-//     $(document).mouseup(() => {
-//       isPointerDown = false;
-//       window.onmousemove = null;
-//     });
-//     $("#svg_" + containing_node_core.node_id + "." + "body_element").mousemove(
-//       () => {
-//         if (isPointerDown == false) return;
-//         // Mouse click + moving logic here
-//         window.onmousemove = handle_item_drag;
-//       }
-//     );
-//   };
-//   /**
-//    * add events handlers to the resizer element in the dom
-//    * the handlers here add size change features when clicked and dragged
-//    * @param {default_node_core} containing_node_core - a reference(link) to the node_core instance it self (passed so the event handler can easily access node_core)
-//    * @return {void}.
-//    */
-//   set_resizer_event_handler = function resizer_event_handler(
-//     containing_node_core
-//   ) {
-//     // here we define the static variables used by the event handlers of this object
-//     //variables and funcions defined here will be accesible by the handlers any time later.
-//     if (typeof resizer_event_handler.counter == "undefined") {
-//       resizer_event_handler.counter = 0;
-//       resizer_event_handler.clicking2 = false; // var to know when the resizer is clicked and when mouse click is up.
-
-//       resizer_event_handler.handle_item_resize = (event) => {
-//         event = event || window.event;
-//         var new_resizer_x = event.clientX; //position of the resizer is the same as the position of the cursor as it moves
-//         var new_resizer_y = event.clientY;
-
-//         var pos_obj = $(
-//           "#svg_" + containing_node_core.node_id + "." + "body_element"
-//         ).position(); // position of the body_dom_svg the resizer attached to
-//         var body_x = pos_obj.left;
-//         var body_y = pos_obj.top;
-//         //prevent item from getting smaller than a specific size ..
-//         var min_width = 30;
-//         var min_height = 30;
-//         if (event.clientX - body_x &lt; min_width) {
-//           new_resizer_x = body_x + min_width;
-//         }
-//         if (event.clientY - body_y &lt; min_height) {
-//           new_resizer_y = body_y + min_height;
-//         }
-
-//         //calculate the new size of node
-//         var new_node_width = new_resizer_x - body_x;
-//         var new_node_height = new_resizer_y - body_y;
-
-//         //change the size of the node
-//         //resize the svg
-//         $("#svg_" + containing_node_core.node_id + "." + "body_element").attr(
-//           "height",
-//           new_node_height
-//         );
-//         $("#svg_" + containing_node_core.node_id + "." + "body_element").attr(
-//           "width",
-//           new_node_width
-//         );
-//         //resize the svg content
-//         $("#shape_" + containing_node_core.node_id + "." + "body_element").attr(
-//           "height",
-//           new_node_height - 5
-//         );
-//         $("#shape_" + containing_node_core.node_id + "." + "body_element").attr(
-//           "width",
-//           new_node_width - 5
-//         );
-//         //reset node resizer position
-//         document.querySelectorAll(
-//           "#svg_" + containing_node_core.node_id + "." + "resizer"
-//         )[0].style.top = new_resizer_y + "px";
-
-//         document.querySelectorAll(
-//           "#svg_" + containing_node_core.node_id + "." + "resizer"
-//         )[0].style.left = new_resizer_x + "px";
-//         //reset node node_shell.connection_points position:
-//         this.update_connection_points();
-
-//         //update related paths
-//         Engine.update_paths(this.node_shell);
-//       };
-//     }
-
-//     $("#svg_" + containing_node_core.node_id + "." + "resizer").mousedown(
-//       (event) => {
-//         //set the glopal variable to true
-//         resizer_event_handler.clicking2 = true;
-//       }
-//     );
-//     $(document).mouseup(() => {
-//       resizer_event_handler.clicking2 = false;
-
-//       window.onmousemove = null;
-//     });
-//     $("#svg_" + containing_node_core.node_id + "." + "resizer").mousemove(
-//       () => {
-//         if (resizer_event_handler.clicking2 == false) return;
-//         // Mouse click + moving logic here
-//         window.onmousemove = resizer_event_handler.handle_item_resize;
-//       }
-//     );
-//   };
-// }</code></pre>
+</code></pre>
         </article>
     </section>
 

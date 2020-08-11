@@ -57,8 +57,7 @@ class Engine {
   }
   /**
    * loop ovrr all the nodes in the nodes_array  {@link Engine#nodes_array} and draw them in the dom
-   * @param {node_shell} parent_node -
-   * @param {node_shell} son_node -
+
    * @return {void}
    */
   draw_nodes() {
@@ -112,7 +111,9 @@ class Engine {
     }
   };
   /**
-   * delete node from the nodes_array  {@link Engine#nodes_array} and all related elements from the dom .. delete all related paths from the dom and the paths_array {@link Engine#paths_array} 
+   * delete node from the nodes_array  {@link Engine#nodes_array} and all related elements from the dom .. 
+   * delete all related paths from the dom and the paths_array {@link Engine#paths_array} 
+   * @todo TODO: delete the node from the sons array of ony parent nod
    * @return {void}
    */
   delete_node(node_shell) {

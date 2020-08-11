@@ -110,7 +110,7 @@ class Engine {
     * @description a variable used by the svg_base event handlers to stop changin the view port
     * ..... it's set to true by node event handlers to stop the change of the view port while the node is changing position.
     */
-    this.is_changin_viewport_allowed = false;
+    this.is_changin_viewport_allowed = true;
   }
 
 
@@ -144,8 +144,7 @@ class Engine {
   }
   /**
    * loop ovrr all the nodes in the nodes_array  {@link Engine#nodes_array} and draw them in the dom
-   * @param {node_shell} parent_node -
-   * @param {node_shell} son_node -
+
    * @return {void}
    */
   draw_nodes() {
@@ -199,7 +198,9 @@ class Engine {
     }
   };
   /**
-   * delete node from the nodes_array  {@link Engine#nodes_array} and all related elements from the dom .. delete all related paths from the dom and the paths_array {@link Engine#paths_array} 
+   * delete node from the nodes_array  {@link Engine#nodes_array} and all related elements from the dom .. 
+   * delete all related paths from the dom and the paths_array {@link Engine#paths_array} 
+   * @todo TODO: delete the node from the sons array of ony parent nod
    * @return {void}
    */
   delete_node(node_shell) {
@@ -263,19 +264,10 @@ class Engine {
     svg.addEventListener('mousemove', onPointerMove); // Mouse is moving
 
 
-    // This function returns an object with X &amp; Y values from the pointer event
-    function getPointFromEvent(event) {
-      var point = { x: 0, y: 0 };
-      // If even is triggered by a touch event, we get the position of the first finger
-      if (event.targetTouches) {
-        point.x = event.targetTouches[0].clientX;
-        point.y = event.targetTouches[0].clientY;
-      } else {
-        point.x = event.clientX;
-        point.y = event.clientY;
-      }
-      return point;
-    }
+    // variables used in event handlers------------start
+
+    // define a variable to make for this keyword inside subfunctions.
+    let this_engin = this;
     // This variable will be used later for move events to check if pointer is down or not
     var isPointerDown = false;
     // This variable will contain the original coordinates when the user start pressing the mouse or touching the screen
@@ -301,14 +293,10 @@ class Engine {
       svg.zoom_ratio = svg.current_viewBox.width / svg.getBoundingClientRect().width;
     });
 
+    // variables used in event handlers------------end
 
 
     // Function called by the event listeners when user start pressing/touching
-    /**
-     * event handler of the mouse click event
-     * @param {object} event - The x position of the top left corenr of the box relative to the window.
-     * @return {void}
-     */
     function onPointerDown(event) {
 
       isPointerDown = true; // We set the pointer as down
@@ -326,8 +314,8 @@ class Engine {
         return;
       }
 
-
-      if (is_changin_viewport_allowed == true) {
+      console.log(this_engin.is_changin_viewport_allowed)
+      if (this_engin.is_changin_viewport_allowed == false) {
         return
       }
       // This prevent user to do a selection on the page
@@ -345,7 +333,7 @@ class Engine {
       // The X &amp; Y values are equal to the current viewBox minus the calculated distances
       var viewBoxString = `${newViewBox.x} ${newViewBox.y} ${svg.current_viewBox.width} ${svg.current_viewBox.height}`;
       // We apply the new viewBox values onto the SVG
-      if (is_changin_viewport_allowed == false) {
+      if (this_engin.is_changin_viewport_allowed == true) {
         svg.setAttribute('viewBox', viewBoxString);
       }
       // document.querySelector('.viewbox').innerHTML = viewBoxString;
@@ -359,6 +347,23 @@ class Engine {
       svg.current_viewBox.x = newViewBox.x;
       svg.current_viewBox.y = newViewBox.y;
     }
+
+
+    // helper funtions 
+    // This function returns an object with X &amp; Y values from the pointer event
+    function getPointFromEvent(event) {
+      var point = { x: 0, y: 0 };
+      // If even is triggered by a touch event, we get the position of the first finger
+      if (event.targetTouches) {
+        point.x = event.targetTouches[0].clientX;
+        point.y = event.targetTouches[0].clientY;
+      } else {
+        point.x = event.clientX;
+        point.y = event.clientY;
+      }
+      return point;
+    }
+
 
     return svg;
   };
