@@ -227,7 +227,6 @@ class Engine {
         return;
       }
 
-      console.log(this_engin.is_changin_viewport_allowed)
       if (this_engin.is_changin_viewport_allowed == false) {
         return
       }

@@ -31,6 +31,20 @@ class element {
         /** @member {shape}  */
         this.shape = new shape(id, this.passed_class + " " + id) //create empty shape object
         this.shape.set_html_shape(html_shape); // fill the shape object
+
+
+        ///working area ... this should be separated in a separate class
+        this.text_container = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject')
+        this.text_container.setAttribute("height", "90%");
+        this.text_container.setAttribute("width", "80%");
+        this.text_container.setAttribute("x", "10%");
+        this.text_container.setAttribute("y", "10%");
+        this.text_container.setAttribute("class", "fo");
+
+        this.newDiv = document.createElement("div");
+        this.newDiv.setAttribute("class", "editable");
+        this.text_container.appendChild(this.newDiv);
+
     }
     /**
      * add the svg box to dom as a child of document.body .. then add the shape as a child of it
@@ -39,7 +53,15 @@ class element {
      */
     draw(parent_dom_element) {
         this.G_SVG.draw(parent_dom_element);
+
+
         this.shape.draw(this.G_SVG.svg_html_object);
+        this.G_SVG.svg_html_object.appendChild(this.text_container);
+
+        // working area
+        var editor = new MediumEditor('.editable');
+
+
     }
     /**
      * get the x attribute from the dom  element 
@@ -110,23 +132,18 @@ class element {
      */
     set_size(w, h) {
         //resize the svg
-        $(this.dom_svg_selector).attr(
-            "height",
-            h
-        );
-        $(this.dom_svg_selector).attr(
-            "width",
-            w
-        );
+
+        this.G_SVG.svg_html_object.setAttribute("height", h);
+        this.G_SVG.svg_html_object.setAttribute("width", w);
+
 
         //resize the svg content ... TODO: this might need to be taken out of the element class as differnt elements may need to resize differently
-        $(this.dom_shape_selector).attr(
-            "height",
-            h - 5
-        );
-        $(this.dom_shape_selector).attr(
-            "width",
-            w - 5
-        );
+        this.shape.shape_html_object.setAttribute("height", h - 5);
+        this.shape.shape_html_object.setAttribute("width", w - 5);
+
+
+
+
+
     }
 }

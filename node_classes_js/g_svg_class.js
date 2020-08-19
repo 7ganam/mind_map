@@ -33,6 +33,17 @@ class G_SVG {
         //set id
         this.svg_html_object.setAttribute("id", "svg_" + id);
 
+
+
+
+
+
+
+
+        // add the text node to the newly created div
+        // this.newDiv.appendChild(this.newContent);
+
+
     }
     /**
      * 
@@ -41,6 +52,7 @@ class G_SVG {
      * @return {void}.
      */
     draw(parent_html_element) {
+
         parent_html_element.appendChild(this.svg_html_object);
     }
 

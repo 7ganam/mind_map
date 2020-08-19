@@ -6,11 +6,20 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        /* div {
+            text-align: center;
+        } */
+    </style>
 </head>
 <!-- # TODO: get rid of the need to make margin =0 -->
 
 <body id="body" style="margin: 0;">
     <div></div>
+    <!-- include the medium editor -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+
     <script src="node_classes_js/g_svg_class.js"></script>
     <script src="node_classes_js/global_shape_creator_class.js"></script>
     <script src="node_classes_js/shape_class.js"></script>
@@ -37,9 +46,12 @@
 
         //TODO: document the classes
         Engine = new Engine();
-        Engine.create_node(0, 0, 150, 50);
+        Engine.create_node(0, 0, 200, 200);
         Engine.draw_nodes();
         // var is_changin_viewport_allowed = false;
+    </script>
+    <script>
+        var editor = new MediumEditor('.editable');
     </script>
 </body>
 

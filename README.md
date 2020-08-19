@@ -24,6 +24,17 @@ my personal coggle_like mind map app
 
 ## todos:
 
+text feature cleanups:
+
+- [ ] separate the text in its own class
+- [ ] make the editor a variable in the class
+- [ ] make the editor optional for the elements .. (not every element should contain an editor)
+- [ ] make a suitable postion and size setters and gitters functions relateive to the containing svg box
+- [ ] solve the event propagation issue ... when text is double clicked the node shouldn't be draggable
+- [ ] read the medium editor documentations
+
+## todos:
+
 house keeping stuff:
 
 - [ ] add my jsdoc routine to g-code-blocks repo
